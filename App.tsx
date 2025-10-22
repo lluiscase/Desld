@@ -1,10 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import Teste from './assets/favicon.png';
+import { useState } from 'react';
 
 export default function App() {
+
+  const [count, setCount] = useState(0);
+
+  const handleTeste = () => {
+    setCount(count + 1);
+    console.log('Clicou', count + 1);
+  }
+
   return (
     <View style={styles.container}>
       <Text>Hello World!</Text>
+      <TouchableOpacity onPress={handleTeste}>
+        <Image source={Teste} />
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
