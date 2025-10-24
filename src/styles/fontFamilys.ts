@@ -4,7 +4,7 @@ export const FontFamilyRoboto = {
     bold: 'Roboto_700Bold',
 }
 export const FontFamilyPoppins = {
-    regular: 'Poppins_400Regular',
-    medium: 'Poppins_500Medium',
-    bold: 'Poppins_700Bold',
+    Pregular: 'Poppins_400Regular',
+    Pmedium: 'Poppins_500Medium',
+    Pbold: 'Poppins_700Bold',
 }

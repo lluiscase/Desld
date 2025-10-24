@@ -4,23 +4,18 @@ import Teste from './assets/favicon.png';
 import { useState } from 'react';
 import { Input } from './src/components/Input';
 import "./src/styles/global.css";
+import { Button } from './src/components/Button';
 
 export default function App() {
 
-  const [count, setCount] = useState(0);
-
-  const handleTeste = () => {
-    setCount(count + 1);
-    console.log('Clicou', count + 1);
-  }
-
   return (
     <View style={styles.container}>
-      <Text>Hello World!</Text>
-      <Input/>
-      <TouchableOpacity onPress={handleTeste}>
-        <Image source={Teste} />
-      </TouchableOpacity>
+      <Input inputType='email'/>
+      <Button text='Próximo'/>
+      <Input inputType='name'/>
+      <Button text='Próximo'/>
+      <Input inputType='password'/>
+
       <StatusBar style="auto" />
     </View>
   );

@@ -8,9 +8,19 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-        colors,
-        FontFamilyPoppins,
-        FontFamilyRoboto,
+      colors,
+      fontFamily: {
+        roboto: [
+          'Roboto_400Regular', 
+          'Roboto_500Medium', 
+          'Roboto_700Bold',   
+        ],
+        poppins: [
+          'Poppins_400Regular', 
+          'Poppins_500Medium', 
+          'Poppins_700Bold',   
+        ],
+      },
     },
   },
   plugins: [],
