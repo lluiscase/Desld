@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Teste from './assets/favicon.png';
 import { useState } from 'react';
+import { Input } from './src/components/Input';
+import "./src/styles/global.css";
 
 export default function App() {
 
@@ -15,6 +17,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello World!</Text>
+      <Input/>
       <TouchableOpacity onPress={handleTeste}>
         <Image source={Teste} />
       </TouchableOpacity>
