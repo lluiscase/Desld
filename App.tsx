@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import Teste from './assets/favicon.png';
-import { useState } from 'react';
+import { StyleSheet, Text, View} from 'react-native';
 import { Input } from './src/components/Input';
 import "./src/styles/global.css";
 import { Button } from './src/components/Button';
+import { Navigation } from './src/components/Navigation';
 
 export default function App() {
 
@@ -15,7 +14,7 @@ export default function App() {
       <Input inputType='name'/>
       <Button text='Próximo'/>
       <Input inputType='password'/>
-
+      <Navigation/>
       <StatusBar style="auto" />
     </View>
   );
