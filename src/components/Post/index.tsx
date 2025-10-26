@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native';
-import imgDog from '../../../assets/dog-convertido-de-jpg.png'
+import imgDog from '../../../assets/Dog.png'
 
 type PostSituation = 'Perdido' | 'Abandonado' | 'Adocao';
 
