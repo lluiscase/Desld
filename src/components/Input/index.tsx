@@ -42,7 +42,7 @@ export function Input({inputType}: InputProps) {
     <TouchableOpacity 
       onPress={handlePress}
       activeOpacity={0.8}
-      className="flex-row items-center p-4 w-[376px] h-[60px] rounded border border-gray-500 mb-4"
+      className="flex-row items-center p-4 w-[376px] h-[60px] rounded border border-gray-500"
     >
       <MaterialIcons 
         name={config.icon} 
