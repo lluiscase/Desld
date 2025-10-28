@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View} from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Input } from '../src/components/Input';
 import "../src/styles/global.css";
 import { Button } from '../src/components/Button';
@@ -10,29 +10,20 @@ import { Link } from 'expo-router';
 export default function Home() {
 
   return (
-    <View style={styles.container}>
-      <Input inputType='email'/>
-      <Button text='Próximo'/>
-      <Input inputType='name'/>
-      <Button text='Próximo'/>
-      <Input inputType='password'/>
-      <Post situation='Perdido' time={5} type='Cachorro'/>
-      <Post name='rex' situation='Abandonado' time={4} type='Cachorro'/>
-      <Post name='rex' situation='Adocao' time={4} type='Cachorro'/>
-      <Link href={'/login'}>dadsa</Link>
-      <Navigation/>
-      <StatusBar style="auto" />
-    </View>
+    <ScrollView className='py-4'>  
+      <View className='flex-1 gap-4 px-8 bg-white items-center'>
+        <Input inputType='email'/>
+        <Input inputType='name'/>
+        <Input inputType='password'/>
+        <Button text='Próximo'/>
+        <Post situation='Perdido' time={5} type='Cachorro'/>
+        <Post name='rex' situation='Abandonado' time={4} type='Cachorro'/>
+        <Post name='rex' situation='Adocao' time={4} type='Cachorro'/>
+        <Link href={'/login'}>dadsa</Link>
+        <Navigation/>
+        <StatusBar style="auto" />
+      </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    gap:8,
-    paddingHorizontal:32,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

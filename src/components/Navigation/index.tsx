@@ -10,7 +10,7 @@ export function Navigation() {
   }
 
   return (
-	<View className='flex flex-row border rounded-3xl border-gray-500 w-[376px] h-[70px] justify-evenly items-center'>
+	<View className='flex flex-row border rounded-3xl border-gray-500 w-full md:w-[376px] h-[70px] justify-evenly items-center'>
 		<TouchableOpacity onPress={()=>handlePressed(1)}>
       <MaterialIcons 
         name="home"

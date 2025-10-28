@@ -7,7 +7,7 @@ interface ButtonProps {
 export function Button({text}: ButtonProps) {
   return (
     <TouchableOpacity 
-      className='bg-blue-400 p-4 w-[376px] h-[56px] rounded items-center justify-center'
+      className='bg-blue-400 p-4 w-full md:w-[376px] h-[56px] rounded items-center justify-center'
     >
       <Text className='text-white font-bold text-lg'>
         {text}
