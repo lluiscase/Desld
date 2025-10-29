@@ -6,6 +6,7 @@ import { Button } from '../src/components/Button';
 import { Navigation } from '../src/components/Navigation';
 import { Post } from '../src/components/Post';
 import { Link } from 'expo-router';
+import { TextArea } from '../src/components/TextArea';
 
 export default function Home() {
 
@@ -16,6 +17,7 @@ export default function Home() {
         <Input inputType='name'/>
         <Input inputType='password'/>
         <Button text='Próximo'/>
+        <TextArea/>
         <Post situation='Perdido' time={5} type='Cachorro'/>
         <Post name='rex' situation='Abandonado' time={4} type='Cachorro'/>
         <Post name='rex' situation='Adocao' time={4} type='Cachorro'/>
