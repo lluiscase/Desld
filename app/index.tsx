@@ -1,31 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { ScrollView, View } from 'react-native';
-import { Input } from '../src/components/Input';
+import { Link } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Image, Text, View } from "react-native";
+import DogAndGirl from "../assets/dogandgirl.png";
+import { Button } from "../src/components/Button";
+import PaginationIndicator from "../src/components/PaginationIndicator";
 import "../src/styles/global.css";
-import { Button } from '../src/components/Button';
-import { Navigation } from '../src/components/Navigation';
-import { Post } from '../src/components/Post';
-import { Link } from 'expo-router';
-import { TextArea } from '../src/components/TextArea';
 
 export default function Home() {
-
-  return (
-    <ScrollView className='py-4'>  
-      <View className='flex-1 gap-4 px-8 bg-white items-center'>
-        <Input inputType='email'/>
-        <Input inputType='name'/>
-        <Input inputType='password'/>
-        <Button text='Próximo'/>
-        <TextArea/>
-        <Post situation='Perdido' time={5} type='Cachorro'/>
-        <Post name='rex' situation='Abandonado' time={4} type='Cachorro'/>
-        <Post name='rex' situation='Adocao' time={4} type='Cachorro'/>
-        <Link href={'/login'}>dadsa</Link>
-        <Navigation/>
-        <StatusBar style="auto" />
-      </View>
-    </ScrollView>
-  );
+	return (
+		<View className="flex-1 flex flex-col px-8 pb-8 bg-white pt-24 justify-between">
+			<Text className="text-blue-400 text-4xl font-bold">
+				AuHelp te ajuda a resgatar animais no conforto de sua casa.
+			</Text>
+			<View className="w-full items-center">
+				<Image source={DogAndGirl} />
+			</View>
+			<View className="flex flex-col items-center justify-center gap-6">
+				<Button text="Próximo" href="step2" />
+				<PaginationIndicator position={0} />
+				<Link className="w-18 text-center" href="/login">Pular tour</Link>
+			</View>
+			<StatusBar style="auto" />
+		</View>
+	);
 }
-

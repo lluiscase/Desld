@@ -1,7 +1,7 @@
 export const colors = {
-    
+
     orange: '#FF5400',
-    
+
     red:'#EF5350',
 
     yellow:'#FFEBA2',
@@ -11,9 +11,9 @@ export const colors = {
     black: '#000000',
 
     green: '#4CAF50',
-    
+
     white: '#FFFFFF',
-    
+
     blue:{
         200:'#6DD5ED',
         400:'#42A5F5'

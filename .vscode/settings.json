@@ -1,0 +1,96 @@
+{
+  // -----------------------------------------------------------------
+  // Configurações de Formatação (O mais importante para consistência)
+  // -----------------------------------------------------------------
+
+  // Define um formatador padrão para ser usado no projeto.
+  // "esbenp.prettier-vscode" é o ID da extensão Prettier.
+  // Se você usa Biome, seria: "biomejs.biome"
+  "editor.defaultFormatter": "biomejs.biome",
+
+  // Formata o arquivo automaticamente ao salvar.
+  "editor.formatOnSave": true,
+
+  // -----------------------------------------------------------------
+  // Ações ao Salvar (Linting e Correções)
+  // -----------------------------------------------------------------
+
+  // Controla as ações que rodam ao salvar.
+  // É útil para corrigir automaticamente erros de lint e organizar imports.
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+
+    // Organiza os imports automaticamente ao salvar (ótimo para JS/TS).
+    "source.organizeImports": "explicit"
+
+    // Se você usasse Biome, você poderia ter:
+    // "source.fixAll.biome": "explicit",
+    // "source.organizeImports.biome": "explicit"
+  },
+
+  // -----------------------------------------------------------------
+  // Configurações de Arquivos e Busca (Performance e Limpeza)
+  // -----------------------------------------------------------------
+
+  // Oculta arquivos e pastas da árvore de arquivos do VS Code.
+  // Essencial para esconder pastas de dependências, build ou logs.
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true, // Muito importante
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true, // Específico do Next.js
+    "**/.cache": true
+  },
+
+  // Exclui arquivos e pastas dos resultados da busca (Ctrl+Shift+F).
+  // Geralmente é bom manter sincronizado com o 'files.exclude'.
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/*.log": true,
+    "**/package-lock.json": true
+  },
+
+  // -----------------------------------------------------------------
+  // Configurações do Editor (Estilo de Código)
+  // -----------------------------------------------------------------
+
+  // Força o tamanho da tabulação (TAB) para 2 espaços.
+  // (Mude para 4 se for o padrão do seu projeto).
+  "editor.tabSize": 2,
+
+  // Insere espaços quando o TAB é pressionado (preferido pela maioria).
+  "editor.insertSpaces": true,
+
+  // Desativa a detecção automática de indentação.
+  // Isso força o editor a usar as regras acima (tabSize, insertSpaces)
+  // ao invés de tentar adivinhar o estilo do arquivo, garantindo consistência.
+  "editor.detectIndentation": false,
+
+  // Remove espaços em branco no final das linhas ao salvar.
+  "files.trimTrailingWhitespace": true,
+
+  // Adiciona uma linha em branco no final do arquivo ao salvar.
+  "files.insertFinalNewline": true,
+
+  // Exemplo para JavaScript e TypeScript
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}
