@@ -72,7 +72,7 @@ export function Input({ inputType, showLabel }: InputProps) {
 			<TouchableOpacity
 				onPress={handlePress}
 				activeOpacity={0.8}
-				className="flex-row items-center p-4 w-full h-[60px] rounded border border-gray-500"
+				className="flex-row items-center px-4 w-full h-[60px] rounded border border-gray-500"
 			>
 				<MaterialIcons
 					name={config.icon}
@@ -83,7 +83,7 @@ export function Input({ inputType, showLabel }: InputProps) {
 
 				<TextInput
 					ref={inputRef}
-					className="flex-1 border-none focus:outline-none"
+					className="flex-1 py-2"
 					placeholder={config.placeholder}
 					placeholderTextColor="#A0A0A0"
 					value={text}
@@ -92,6 +92,7 @@ export function Input({ inputType, showLabel }: InputProps) {
 					secureTextEntry={isPassword}
 					keyboardType={config.keyboardType}
 					autoCapitalize={inputType === "name" ? "words" : "none"}
+          multiline={false}
 				/>
 			</TouchableOpacity>
 		</View>
