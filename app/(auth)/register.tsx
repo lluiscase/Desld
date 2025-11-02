@@ -4,9 +4,15 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import CatsWelcome from "../../assets/catsWelcome.png";
 import { Button } from "../../src/components/Button";
 import { Input } from "../../src/components/Input";
+import { useAuth } from "../../src/context/authContext";
 
 export default function Register() {
 	const navigation = useNavigation();
+  const { signIn } = useAuth();
+
+  const handleLogin = async () => {
+		await signIn("some_auth_token_from_server");
+	};
 
 	const handleGoBack = () => {
 		navigation.goBack();
@@ -32,7 +38,7 @@ export default function Register() {
           <Input inputType="password" showLabel />
           <Input inputType="passwordRerun" showLabel />
         </View>
-        <Button text="Criar conta" href="/home" />
+        <Button text="Criar conta" onPress={handleLogin} />
       </View>
     </View>
 	);

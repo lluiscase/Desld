@@ -1,15 +1,22 @@
-import { useNavigation } from "@react-navigation/native";
+// app/(auth)/login.tsx
+
+import { Link, router } from "expo-router"; // 👈 Importar o router do Expo Router
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import CatsWelcome from "../../assets/catsWelcome.png";
 import { Button } from "../../src/components/Button";
 import { Input } from "../../src/components/Input";
+import { useAuth } from "../../src/context/authContext";
 
 export default function Login() {
-	const navigation = useNavigation();
+	const { signIn } = useAuth();
+
+	const handleLogin = async () => {
+		await signIn("some_auth_token_from_server");
+	};
 
 	const handleGoBack = () => {
-		navigation.goBack();
+		router.back();
 	};
 
 	return (
@@ -28,9 +35,9 @@ export default function Login() {
 			<View>
 				<Input inputType="email" showLabel />
 				<Input inputType="password" showLabel />
-				<Text className="mt-2 text-blue-400 text-end">Esqueci a senha</Text>
+				<Link href={"/forgotPassword"} className="mt-2 text-blue-400 text-end">Esqueci a senha</Link>
 			</View>
-			<Button text="Entrar" href="/home" />
+			<Button text="Entrar" onPress={handleLogin} />
 		</View>
 	);
 }

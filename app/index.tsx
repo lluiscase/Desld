@@ -6,7 +6,7 @@ import { Button } from "../src/components/Button";
 import PaginationIndicator from "../src/components/PaginationIndicator";
 import "../src/styles/global.css";
 
-export default function Home() {
+export default function Slide1() {
 	return (
 		<View className="flex-1 flex flex-col px-8 pb-8 bg-white pt-24 justify-between">
 			<Text className="text-blue-400 text-4xl font-bold">

@@ -83,7 +83,7 @@ export function Input({ inputType, showLabel }: InputProps) {
 
 				<TextInput
 					ref={inputRef}
-					className="flex-1 py-2"
+					className="flex-1 py-2 focus:border-none focus:outline-none"
 					placeholder={config.placeholder}
 					placeholderTextColor="#A0A0A0"
 					value={text}

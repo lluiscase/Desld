@@ -4,14 +4,18 @@ import { Text, TouchableOpacity } from "react-native";
 interface ButtonProps {
 	text: string;
 	href?: string;
+  onPress?: () => void;
 }
 
-export function Button({ text, href }: ButtonProps) {
+export function Button({ text, href, onPress }: ButtonProps) {
 	const router = useRouter();
 
 	const handlePress = () => {
-    if (href)
+    if (onPress) {
+      onPress();
+    } else if (href) {
 		  router.push(href);
+    }
 	};
 
 	return (
