@@ -1,24 +1,23 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
-import WomanCard from "../../assets/womanCard.png";
+import DogSad from "../../assets/dogSad.png";
 import { Button } from "../../src/components/Button";
 import PaginationIndicator from "../../src/components/PaginationIndicator";
 import "../../src/styles/global.css";
 
-export default function Step2() {
+export default function Step3() {
 	return (
 		<View className="flex-1 flex flex-col px-8 pb-8 bg-white pt-24 justify-between">
 			<Text className="text-blue-400 text-4xl font-bold">
-				<Text className="text-red text-4xl font-bold">Reporte</Text>
-				{" animais \nem riscos com \napenas um clique."}
+				{"Dê um novo lar\npara um animalzinho\nsem moradia."}
 			</Text>
 			<View className="w-full items-center">
-				<Image source={WomanCard} />
+				<Image source={DogSad} />
 			</View>
 			<View className="flex flex-col items-center justify-center gap-6">
-				<Button text="Próximo" href="step3" />
-				<PaginationIndicator position={1} />
+				<Button text="Próximo" href="step4" />
+				<PaginationIndicator position={2} />
 				<Link className="w-18 text-center" href="/initial">
 					Pular tour
 				</Link>

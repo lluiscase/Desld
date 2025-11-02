@@ -18,7 +18,7 @@ export default function Home() {
 			<View className="flex flex-col items-center justify-center gap-6">
 				<Button text="Próximo" href="step2" />
 				<PaginationIndicator position={0} />
-				<Link className="w-18 text-center" href="/login">Pular tour</Link>
+				<Link className="w-18 text-center" href="/initial">Pular tour</Link>
 			</View>
 			<StatusBar style="auto" />
 		</View>
