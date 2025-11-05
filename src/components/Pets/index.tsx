@@ -11,7 +11,7 @@ export function Pets({ name }: PerfilProps) {
 		<View className="items-center">
 			<Image
 				source={imgDog}
-				style={{ width: 80, height: 80, borderRadius: '50%'}}
+				style={{ width: 80, height: 80, borderRadius: 40}}
 			/>
 			<Text className="mt-2">{name}</Text>
 		</View>

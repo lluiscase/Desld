@@ -6,7 +6,7 @@ export function Perfil() {
 		<View className="flex flex-col items-center">
 			<Image
 				source={User}
-				style={{ width: 47, height: 47, borderRadius: "50%" }}
+				style={{ width: 47, height: 47, borderRadius: 40 }}
 			/>
 		</View>
 	);

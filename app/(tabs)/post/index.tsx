@@ -6,12 +6,9 @@ import { Button } from "../../../src/components/Button";
 export default function Post() {
 	return (
 		<View className="flex-1 flex-col px-8 bg-white pt-24 pb-10 justify-between">
-			<MaterialIcons
-				className="text-end"
-				name="history"
-				size={34}
-				color={"#4A4A4A"}
-			/>
+			<View className="items-end">
+				<MaterialIcons name="history" size={34} color={"#4A4A4A"} />
+			</View>
 			<Text className="font-bold text-2xl text-center">
 				Publicar um animalzinho ?
 			</Text>
@@ -23,7 +20,7 @@ export default function Post() {
 					}
 				</Text>
 			</View>
-			<Button text="Divulgar" href="/(tabs)/post/photo"/>
+			<Button text="Divulgar" href="/(tabs)/post/photo" />
 		</View>
 	);
 }
