@@ -1,6 +1,6 @@
+import { useIsFocused } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import * as MediaLibrary from "expo-media-library";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
@@ -15,6 +15,7 @@ export default function Photo() {
 	const [photoUri, setPhotoUri] = useState<string | null>(null);
 	const cameraRef = useRef<CameraView>(null);
 	const router = useRouter();
+	const isFocused = useIsFocused();
 
 	useEffect(() => {
 		requestCameraPermission();
@@ -26,19 +27,20 @@ export default function Photo() {
 	}
 
 	const takePhoto = async () => {
-		if (cameraRef.current) {
-			const options = { quality: 0.7, base64: true, exif: false };
-			const photo = await cameraRef.current.takePictureAsync(options);
-			if (photo) {
-				setPhotoUri(photo.uri);
-				console.log("Foto tirada:", photo.uri);
+		// if (cameraRef.current) {
+		// 	const options = { quality: 0.7, base64: true, exif: false };
+		// 	const photo = await cameraRef.current.takePictureAsync(options);
+		// 	if (photo) {
+		// 		setPhotoUri(photo.uri);
+		// 		console.log("Foto tirada:", photo.uri);
 
-				if (mediaLibraryPermission?.granted) {
-					await MediaLibrary.saveToLibraryAsync(photo.uri);
-					Alert.alert("Sucesso", "Foto salva na galeria!");
-				}
-			}
-		}
+		// 		if (mediaLibraryPermission?.granted) {
+		// 			await MediaLibrary.saveToLibraryAsync(photo.uri);
+		// 			Alert.alert("Sucesso", "Foto salva na galeria!");
+		// 		}
+		// 	}
+		// }
+		router.push("/(tabs)/post/typeAnimal");
 	};
 
 	const openMediaLibrary = async () => {
@@ -77,14 +79,6 @@ export default function Photo() {
 		);
 	}
 
-	if (!mediaLibraryPermission.granted) {
-		return (
-			<View className="flex-1 justify-center items-center bg-white">
-				<Text>Acesso à galeria negado.</Text>
-			</View>
-		);
-	}
-
 	if (photoUri) {
 		return (
 			<View className="flex-1 flex-col bg-white">
@@ -116,40 +110,51 @@ export default function Photo() {
 
 	return (
 		<View className="flex-1 bg-black">
-			<CameraView ref={cameraRef} className="flex-1" facing={facing}>
-				<View className="flex-1 flex-row bg-transparent mt-12 justify-end items-start px-4">
-					<TouchableOpacity
-						onPress={() => router.back()}
-						className="p-2 rounded-full bg-white/50"
-					>
-						<MaterialIcons name="arrow-back" size={28} color="black" />
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={toggleFacing}
-						className="p-2 rounded-full bg-white/50 ml-auto"
-					>
-						<MaterialIcons name="flip-camera-android" size={28} color="black" />
-					</TouchableOpacity>
-				</View>
+			{isFocused && (
+				<CameraView
+					ref={cameraRef}
+					className="flex-1"
+					facing={facing}
+					style={{ width: "100%", height: "100%" }}
+				>
+					<View className="absolute top-0 w-full flex-row justify-between items-start px-4 pt-12">
+						<TouchableOpacity
+							onPress={() => router.back()}
+							className="p-2 rounded-full bg-white/50"
+						>
+							<MaterialIcons name="arrow-back" size={28} color="black" />
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={toggleFacing}
+							className="p-2 rounded-full bg-white/50 ml-auto"
+						>
+							<MaterialIcons
+								name="flip-camera-android"
+								size={28}
+								color="black"
+							/>
+						</TouchableOpacity>
+					</View>
 
-				<View className="absolute bottom-0 w-full flex-row justify-around items-center p-6">
-					<TouchableOpacity
-						onPress={openMediaLibrary}
-						className="p-4 rounded-full bg-gray-600"
-					>
-						<MaterialIcons name="photo-library" size={30} color="white" />
-					</TouchableOpacity>
+					<View className="absolute bottom-0 w-full flex-row justify-around items-center p-6">
+						<TouchableOpacity
+							onPress={openMediaLibrary}
+							className="p-4 rounded-full bg-gray-600"
+						>
+							<MaterialIcons name="photo-library" size={30} color="white" />
+						</TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={takePhoto}
-						className="w-20 h-20 rounded-full border-4 border-white bg-white/30 justify-center items-center"
-					>
-						<View className="w-16 h-16 rounded-full bg-white" />
-					</TouchableOpacity>
+						<TouchableOpacity
+							onPress={takePhoto}
+							className="w-20 h-20 rounded-full border-4 border-white bg-white/30 justify-center items-center"
+						>
+							<View className="w-16 h-16 rounded-full bg-white" />
+						</TouchableOpacity>
 
-					<View className="w-16 h-16" />
-				</View>
-			</CameraView>
+						<View className="w-16 h-16" />
+					</View>
+				</CameraView>
+			)}
 		</View>
 	);
 }

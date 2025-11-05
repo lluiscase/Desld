@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "AuHelp",
+    "slug": "AuHelp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "scheme": "my-app",
+    "scheme": "AuHelp",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
