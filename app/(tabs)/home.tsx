@@ -8,12 +8,12 @@ import "../../src/styles/global.css";
 
 export default function Home() {
 	return (
-		<ScrollView>
-			<View className="flex-1 flex-col px-8 pb-8 bg-white pt-24">
-				<View className="flex-row justify-between itmems-center mb-6">
-					<Text className="text-blue-400 text-4xl font-bold">AuHelp</Text>
-					<Perfil />
-				</View>
+		<View className="flex-1 flex-col px-8 bg-white pt-24">
+			<View className="flex-row justify-between itmems-center mb-6">
+				<Text className="text-blue-400 text-4xl font-bold">AuHelp</Text>
+				<Perfil />
+			</View>
+			<ScrollView showsHorizontalScrollIndicator={false}>
 				<Image
 					source={Banner}
 					style={{ width: 376, height: 177, borderRadius: 5 }}
@@ -39,16 +39,16 @@ export default function Home() {
 				<ScrollView
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
-					contentContainerClassName="flex-row gap-6"
+					contentContainerClassName="flex-row gap-4"
 					className="flex-grow-0"
 				>
 					<Dicas />
-          <Dicas />
-          <Dicas />
-          <Dicas />
-          <Dicas />
+					<Dicas />
+					<Dicas />
+					<Dicas />
+					<Dicas />
 				</ScrollView>
-        <Text className="text-base font-semibold my-6">
+				<Text className="text-base font-semibold my-6">
 					Animaizinhos em riscos
 				</Text>
 				<ScrollView
@@ -65,7 +65,7 @@ export default function Home() {
 					<Pets name="Bravesa" />
 				</ScrollView>
 				<StatusBar style="auto" />
-			</View>
-		</ScrollView>
+			</ScrollView>
+		</View>
 	);
 }

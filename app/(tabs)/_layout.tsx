@@ -1,10 +1,21 @@
-import { Tabs } from "expo-router";
+import { Tabs, useSegments } from "expo-router";
 import { Navigation } from "../../src/components/Navigation";
 
 export default function AppLayout() {
+	const segments = useSegments();
+	const screensToHide = [
+		"photo",
+		"typeAnimal",
+		"situation",
+		"descripition",
+		"preVisulation",
+	];
+	const lastSegment = segments[segments.length - 1];
+	const isPostScreen = screensToHide.includes(lastSegment);
+
 	return (
 		<Tabs
-			tabBar={(props) => <Navigation {...props} />}
+			tabBar={(props) => (isPostScreen ? null : <Navigation {...props} />)}
 			screenOptions={{
 				headerShown: false,
 			}}

@@ -40,7 +40,7 @@ export function Navigation({
 				<TouchableOpacity
 					accessibilityRole="button"
 					accessibilityLabel={
-						descriptors[state.routes[0].name]?.options?.title || "Postar"
+						descriptors[state.routes[1].name]?.options?.title || "Postar"
 					}
 					onPress={() => handlePress(state.routes[1].name, activeIndex === 1)}
 				>
@@ -53,7 +53,7 @@ export function Navigation({
 				<TouchableOpacity
 					accessibilityRole="button"
 					accessibilityLabel={
-						descriptors[state.routes[0].name]?.options?.title || "Pesquisar"
+						descriptors[state.routes[2].name]?.options?.title || "Pesquisar"
 					}
 					onPress={() => handlePress(state.routes[2].name, activeIndex === 2)}
 				>
