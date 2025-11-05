@@ -22,7 +22,7 @@ export function Navigation({
 	};
 
 	return (
-		<View className="bg-white pb-8 px-8 md:px-auto">
+		<View className="bg-white pb-8 pt-1 px-8 md:px-auto">
 			<View className="flex flex-row bg-white border rounded-3xl border-gray-500 md:w-[376px] h-[70px] justify-evenly items-center">
 				<TouchableOpacity
 					accessibilityRole="button"
