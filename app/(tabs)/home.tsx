@@ -16,7 +16,7 @@ export default function Home() {
 			<ScrollView showsHorizontalScrollIndicator={false}>
 				<Image
 					source={Banner}
-					style={{ width: 376, height: 177, borderRadius: 5 }}
+					style={{ width: "100%", height: undefined, aspectRatio: 376 / 177, borderRadius: 5, resizeMode: 'contain' }}
 				/>
 				<View className="w-full h-px bg-blue-400 my-6" />
 				<Text className="text-base font-semibold mb-6">

@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Button } from "../../../src/components/Button";
 
 export default function Photo() {
 	const [cameraPermission, requestCameraPermission] = useCameraPermissions();
@@ -73,8 +74,9 @@ export default function Photo() {
 
 	if (!cameraPermission.granted) {
 		return (
-			<View className="flex-1 justify-center items-center bg-white">
+			<View className="flex-1 justify-center items-center px-8 bg-white pt-24 pb-10">
 				<Text>Acesso à câmera negado.</Text>
+        <Button text="Next" href="/(tabs)/post/typeAnimal"/>
 			</View>
 		);
 	}

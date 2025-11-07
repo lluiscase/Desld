@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { Image, Text, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DogPost from "../../../assets/DogPost.png";
@@ -7,7 +8,9 @@ export default function Post() {
 	return (
 		<View className="flex-1 flex-col px-8 bg-white pt-24 pb-10 justify-between">
 			<View className="items-end">
-				<MaterialIcons name="history" size={34} color={"#4A4A4A"} />
+				<Link href="/(tabs)/post/history">
+					<MaterialIcons name="history" size={34} color={"#4A4A4A"} />
+				</Link>
 			</View>
 			<Text className="font-bold text-2xl text-center">
 				Publicar um animalzinho ?
