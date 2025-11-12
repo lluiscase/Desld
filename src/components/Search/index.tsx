@@ -4,7 +4,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 interface InputProps {
 	placeholder: string;
-	showLabel?: boolean;
+	showLabel?: string;
 }
 
 export function InputSearch({ placeholder, showLabel }: InputProps) {
@@ -18,13 +18,13 @@ export function InputSearch({ placeholder, showLabel }: InputProps) {
 	return (
 		<View className="w-full mt-4">
 			{showLabel && (
-				<Text className="mb-2 text-xl font-bold text-blue-400">{text}</Text>
+				<Text className="mb-2 text-xl font-semibold">{showLabel}</Text>
 			)}
 
 			<TouchableOpacity
 				onPress={handlePress}
 				activeOpacity={0.8}
-				className="flex-row items-center px-4 w-full h-[47px] rounded-3xl border border-gray-500"
+				className="flex-row items-center px-4 w-full h-[47px] rounded-2xl border border-gray-500"
 			>
 				<TextInput
 					ref={inputRef}

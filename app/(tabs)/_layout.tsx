@@ -7,7 +7,7 @@ export default function AppLayout() {
 		"photo",
 		"typeAnimal",
 		"situation",
-		"descripition",
+		"description",
 		"preVisulation",
 	];
 	const lastSegment = segments[segments.length - 1];

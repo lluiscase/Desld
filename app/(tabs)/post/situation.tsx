@@ -23,7 +23,7 @@ export default function Situation() {
 			</View>
 			<CorouselPost />
 			<View className="px-8">
-				<Button text="Próximo" href="/(tabs)/post/situation" />
+				<Button text="Próximo" href="/(tabs)/post/description" />
 				<Link
 					className="text-center pt-4 text-red text-base"
 					href="/(tabs)/post"
