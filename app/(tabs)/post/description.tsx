@@ -40,7 +40,7 @@ export default function Description() {
 					<TextArea />
 				</View>
 				<View>
-					<Button text="Próximo" href="/(tabs)/post/descripition" />
+					<Button text="Próximo" href="/(tabs)/post/preVisulation" />
 					<Link
 						className="text-center pt-4 text-red text-base"
 						href="/(tabs)/post"

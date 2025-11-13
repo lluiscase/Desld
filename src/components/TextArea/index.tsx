@@ -6,7 +6,8 @@ export default function TextArea() {
 
   return (
     <TextInput
-    className="w-full h-32 p-4 border border-gray-300 rounded-md bg-white text-base text-black"
+    className="w-full h-32 p-4 border border-gray-300 rounded-md bg-gray-300
+    text-base text-black"
     onChangeText={onChangeText}
     value={text}
     placeholder="Your text here..."
