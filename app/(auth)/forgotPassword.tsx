@@ -2,8 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Password from "../../assets/password.png";
-import { Button } from "../../src/components/Button";
-import { Input } from "../../src/components/Input";
+import Button from "../../src/components/Button";
+import Input from "../../src/components/Input";
 
 export default function Register() {
 	const navigation = useNavigation();

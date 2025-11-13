@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
 import ShareLocation from "../../assets/shareLocation.png";
-import { Button } from "../../src/components/Button";
+import Button from "../../src/components/Button";
 import PaginationIndicator from "../../src/components/PaginationIndicator";
 import "../../src/styles/global.css";
 

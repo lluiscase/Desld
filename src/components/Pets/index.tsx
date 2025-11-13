@@ -5,7 +5,7 @@ interface PerfilProps {
 	name: string;
 }
 
-export function Pets({ name }: PerfilProps) {
+export default function Pets({ name }: PerfilProps) {
 
 	return (
 		<View className="items-center">

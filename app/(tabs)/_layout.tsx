@@ -1,5 +1,5 @@
 import { Tabs, useSegments } from "expo-router";
-import { Navigation } from "../../src/components/Navigation";
+import Navigation from "../../src/components/Navigation";
 
 export default function AppLayout() {
 	const segments = useSegments();

@@ -1,14 +1,12 @@
-// Garanta que você tenha o nativewind configurado
-
 import { MaterialIcons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
 import {
-	SafeAreaView,
 	ScrollView,
 	Text,
 	TouchableOpacity,
 	View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type TagItem = {
 	id: string;

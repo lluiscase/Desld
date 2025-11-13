@@ -58,7 +58,7 @@ const renderItem = ({ item }: { item: CarouselItemData }) => {
 	);
 };
 
-export function CorouselPost() {
+export default function CorouselPost() {
 	const carouselRef = useRef<ICarouselInstance>(null);
 	const [activeIndex, setActiveIndex] = useState(1);
 

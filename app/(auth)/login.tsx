@@ -4,8 +4,8 @@ import { Link, router } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import CatsWelcome from "../../assets/catsWelcome.png";
-import { Button } from "../../src/components/Button";
-import { Input } from "../../src/components/Input";
+import Button from "../../src/components/Button";
+import Input from "../../src/components/Input";
 import { useAuth } from "../../src/context/authContext";
 
 export default function Login() {

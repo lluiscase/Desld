@@ -2,8 +2,8 @@ import { Link, router } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Cat from "../../../assets/Cat.png";
-import { Button } from "../../../src/components/Button";
-import { InputSearch } from "../../../src/components/Search";
+import Button from "../../../src/components/Button";
+import InputSearch from "../../../src/components/Search";
 
 const handleGoBack = () => {
 	router.back();

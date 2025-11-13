@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextInput} from 'react-native';
 
-export function TextArea() {
+export default function TextArea() {
   const [text, onChangeText] = useState('');
 
   return (
@@ -10,10 +10,10 @@ export function TextArea() {
     onChangeText={onChangeText}
     value={text}
     placeholder="Your text here..."
-    
-    multiline={true} 
-    numberOfLines={5} 
-    textAlignVertical="top" 
+
+    multiline={true}
+    numberOfLines={5}
+    textAlignVertical="top"
     />
   );
 }

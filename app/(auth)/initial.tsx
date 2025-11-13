@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
 import WomanAndDog from "../../assets/womanAndDog.png";
-import { Button } from "../../src/components/Button";
+import Button from "../../src/components/Button";
 import "../../src/styles/global.css";
 
 export default function Initial() {

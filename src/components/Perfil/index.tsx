@@ -1,7 +1,7 @@
 import { Image, View } from "react-native";
 import User from "../../../assets/User.png";
 
-export function Perfil() {
+export default function Perfil() {
 	return (
 		<View className="flex flex-col items-center">
 			<Image

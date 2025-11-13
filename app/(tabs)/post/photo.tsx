@@ -3,9 +3,16 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+	Alert,
+	Image,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { Button } from "../../../src/components/Button";
+import Button from "../../../src/components/Button";
 
 export default function Photo() {
 	const [cameraPermission, requestCameraPermission] = useCameraPermissions();
@@ -76,7 +83,7 @@ export default function Photo() {
 		return (
 			<View className="flex-1 justify-center items-center px-8 bg-white pt-24 pb-10">
 				<Text>Acesso à câmera negado.</Text>
-        <Button text="Next" href="/(tabs)/post/typeAnimal"/>
+				<Button text="Next" href="/(tabs)/post/typeAnimal" />
 			</View>
 		);
 	}
@@ -113,12 +120,12 @@ export default function Photo() {
 	return (
 		<View className="flex-1 bg-black">
 			{isFocused && (
-				<CameraView
-					ref={cameraRef}
-					className="flex-1"
-					facing={facing}
-					style={{ width: "100%", height: "100%" }}
-				>
+				<>
+					<CameraView
+						ref={cameraRef}
+						facing={facing}
+						style={StyleSheet.absoluteFillObject}
+					/>
 					<View className="absolute top-0 w-full flex-row justify-between items-start px-4 pt-12">
 						<TouchableOpacity
 							onPress={() => router.back()}
@@ -155,7 +162,7 @@ export default function Photo() {
 
 						<View className="w-16 h-16" />
 					</View>
-				</CameraView>
+				</>
 			)}
 		</View>
 	);

@@ -7,7 +7,7 @@ interface InputProps {
 	showLabel?: string;
 }
 
-export function InputSearch({ placeholder, showLabel }: InputProps) {
+export default function InputSearch({ placeholder, showLabel }: InputProps) {
 	const [text, setText] = useState("");
 
 	const inputRef = useRef<TextInput>(null);

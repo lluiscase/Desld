@@ -50,7 +50,7 @@ const INPUT_CONFIG: Record<
 	},
 };
 
-export function Input({ inputType, showLabel }: InputProps) {
+export default function Input({ inputType, showLabel }: InputProps) {
 	const [text, setText] = useState("");
 	const inputRef = useRef<TextInput>(null);
 

@@ -2,7 +2,7 @@ import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-export function Navigation({
+export default function Navigation({
 	state,
 	descriptors,
 	navigation,

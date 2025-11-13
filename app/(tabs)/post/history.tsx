@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { Post } from "../../../src/components/Post";
+import Post from "../../../src/components/Post";
 
 export default function History() {
 	const handleGoBack = () => {
@@ -16,7 +16,7 @@ export default function History() {
 				</TouchableOpacity>
 				<Text className="text-4xl font-bold">Últimos Anúncios</Text>
 			</View>
-			<View className="mt-6 space-y-6">
+			<View className="mt-6 gap-4">
 				<Post situation="Perdido" name="Rex" type="Cachorro" time={4} />
 				<Post situation="Abandonado" name="Rex" type="Gato" time={1} />
 				<Post situation="Adocao" name="" type="Coelho" time={3} />

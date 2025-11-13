@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 import Lampad from "../../../assets/Lampad.png";
 
-export function Dicas() {
+export default function Dicas() {
 	return (
 		<View className="flex flex-col items-center">
 			<Image

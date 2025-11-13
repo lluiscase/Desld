@@ -7,7 +7,7 @@ interface ButtonProps {
   onPress?: () => void;
 }
 
-export function Button({ text, href, onPress }: ButtonProps) {
+export default function Button({ text, href, onPress }: ButtonProps) {
 	const router = useRouter();
 
 	const handlePress = () => {

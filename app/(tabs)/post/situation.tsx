@@ -1,8 +1,8 @@
 import { Link, router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { Button } from "../../../src/components/Button";
-import { CorouselPost } from "../../../src/components/CorouselPost";
+import Button from "../../../src/components/Button";
+import CorouselPost from "../../../src/components/CorouselPost";
 
 const handleGoBack = () => {
 	router.back();

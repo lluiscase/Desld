@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
 import Banner from "../../assets/Banner.png";
-import { Dicas } from "../../src/components/Dicas";
-import { Perfil } from "../../src/components/Perfil";
-import { Pets } from "../../src/components/Pets";
+import Dicas from "../../src/components/Dicas";
+import Perfil from "../../src/components/Perfil";
+import Pets from "../../src/components/Pets";
 import "../../src/styles/global.css";
 
 export default function Home() {
