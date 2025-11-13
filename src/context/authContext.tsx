@@ -13,6 +13,7 @@ interface AuthContextType {
 	isLoading: boolean;
 	signIn: (token: string) => Promise<void>;
 	signOut: () => void;
+	signUp: (name: string, email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +21,7 @@ const AuthContext = createContext<AuthContextType>({
 	isLoading: true,
 	signIn: async () => {},
 	signOut: () => {},
+	signUp: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -43,8 +45,16 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 		setUser(null);
 	};
 
+	const signUp = async (name: string, email: string, password: string) => {
+		console.log("User signed up with:", name, email, password);
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+		setUser({ id: "123", name });
+	};
+
 	return (
-		<AuthContext.Provider value={{ user, isLoading, signIn, signOut }}>
+		<AuthContext.Provider
+			value={{ user, isLoading, signIn, signOut, signUp }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import {
 	type KeyboardType,
 	Text,
@@ -8,11 +8,14 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-type InputType = "email" | "password" | "name" |"passwordRerun";
+type InputType = "email" | "password" | "name" | "passwordRerun";
 
 interface InputProps {
 	inputType: InputType;
 	showLabel?: boolean;
+	value: string;
+	onChangeText: (text: string) => void;
+	error?: string;
 }
 
 const INPUT_CONFIG: Record<
@@ -42,7 +45,7 @@ const INPUT_CONFIG: Record<
 		keyboardType: "default",
 		label: "Senha",
 	},
-  passwordRerun: {
+	passwordRerun: {
 		icon: "lock",
 		placeholder: "Crie sua senha:",
 		keyboardType: "default",
@@ -50,8 +53,13 @@ const INPUT_CONFIG: Record<
 	},
 };
 
-export default function Input({ inputType, showLabel }: InputProps) {
-	const [text, setText] = useState("");
+export default function Input({
+	inputType,
+	showLabel,
+	value,
+	onChangeText,
+	error,
+}: InputProps) {
 	const inputRef = useRef<TextInput>(null);
 
 	const handlePress = useCallback(() => {
@@ -72,7 +80,9 @@ export default function Input({ inputType, showLabel }: InputProps) {
 			<TouchableOpacity
 				onPress={handlePress}
 				activeOpacity={0.8}
-				className="flex-row items-center px-4 w-full h-[60px] rounded border border-gray-500"
+				className={`flex-row items-center px-4 w-full h-[60px] rounded border ${
+					error ? "border-red-500" : "border-gray-500"
+				}`}
 			>
 				<MaterialIcons
 					name={config.icon}
@@ -86,15 +96,16 @@ export default function Input({ inputType, showLabel }: InputProps) {
 					className="flex-1 py-2 focus:border-none focus:outline-none"
 					placeholder={config.placeholder}
 					placeholderTextColor="#A0A0A0"
-					value={text}
-					onChangeText={setText}
+					value={value}
+					onChangeText={onChangeText}
 					underlineColorAndroid="transparent"
 					secureTextEntry={isPassword}
 					keyboardType={config.keyboardType}
 					autoCapitalize={inputType === "name" ? "words" : "none"}
-          multiline={false}
+					multiline={false}
 				/>
 			</TouchableOpacity>
+			{error && <Text className="mt-1 text-red-500">{error}</Text>}
 		</View>
 	);
 }

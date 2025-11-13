@@ -1,6 +1,5 @@
-// app/(auth)/login.tsx
-
 import { Link, router } from "expo-router";
+import { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import CatsWelcome from "../../assets/catsWelcome.png";
@@ -10,9 +9,46 @@ import { useAuth } from "../../src/context/authContext";
 
 export default function Login() {
 	const { signIn } = useAuth();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+		{},
+	);
+	const [loading, setLoading] = useState(false);
 
 	const handleLogin = async () => {
-		await signIn("some_auth_token_from_server");
+		setErrors({});
+		let hasError = false;
+
+		if (!email) {
+			setErrors((prev) => ({ ...prev, email: "Email é obrigatório" }));
+			hasError = true;
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+			setErrors((prev) => ({ ...prev, email: "Email inválido" }));
+			hasError = true;
+		}
+
+		if (!password) {
+			setErrors((prev) => ({ ...prev, password: "Senha é obrigatória" }));
+			hasError = true;
+		}
+
+		if (hasError) {
+			return;
+		}
+
+		setLoading(true);
+		try {
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+			await signIn("some_auth_token_from_server");
+		} catch (error) {
+			setErrors({
+				email: "Email ou senha inválidos",
+				password: "Email ou senha inválidos",
+			});
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const handleGoBack = () => {
@@ -33,11 +69,25 @@ export default function Login() {
 				<Image source={CatsWelcome} />
 			</View>
 			<View>
-				<Input inputType="email" showLabel />
-				<Input inputType="password" showLabel />
-				<Link href={"/forgotPassword"} className="mt-2 text-blue-400 text-end">Esqueci a senha</Link>
+				<Input
+					inputType="email"
+					showLabel
+					value={email}
+					onChangeText={setEmail}
+					error={errors.email}
+				/>
+				<Input
+					inputType="password"
+					showLabel
+					value={password}
+					onChangeText={setPassword}
+					error={errors.password}
+				/>
+				<Link href={"/forgotPassword"} className="mt-2 text-blue-400 text-end">
+					Esqueci a senha
+				</Link>
 			</View>
-			<Button text="Entrar" onPress={handleLogin} />
+			<Button text="Entrar" onPress={handleLogin} disabled={loading} />
 		</View>
 	);
 }
