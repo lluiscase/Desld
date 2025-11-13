@@ -35,7 +35,7 @@ export default function AppLayout() {
 			<Tabs.Screen
 				name="search"
 				options={{
-					title: "pesquisar",
+					title: "Pesquisar",
 				}}
 			/>
 		</Tabs>

@@ -9,7 +9,7 @@ import TextArea from "../../../src/components/TextArea";
 
 
 
-export default function PreVisulation() {
+export default function AnimalSelect() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const NEXT_PAGE = "/(tabs)/post";
 
@@ -39,7 +39,6 @@ export default function PreVisulation() {
 				<View className="flex-row justify-between">
 					<View className="flex-row items-center justify-center gap-1">
 						<Text className="uppercase text-xl font-bold">rex</Text>
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 					<Text className="bg-red p-2 rounded-xl border text-white border-gray-500">
 						Perdido
@@ -63,24 +62,20 @@ export default function PreVisulation() {
 					<View className="flex-row items-center gap-1">
 						<MaterialIcons name={"location-on"} size={25} color="#000" />
 						<Text className="text-base">Rua das Flores, Centro</Text>
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 					<View className="flex-row items-center gap-1">
 						<MaterialIcons name={"event"} size={25} color="#000" />
 						<Text className="text-base">Perdido(a) há</Text>
 						<Text className="text-red text-base">5 dias!</Text>
 						<MaterialIcons name={"notifications"} size={25} color="#EF5350" />
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 					<View className="flex-row items-center gap-1">
 						<MaterialIcons name={"person"} size={25} color="#000" />
 						<Text className="text-base">Reportado por Maria Silva</Text>
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 					<View className="flex-row items-center gap-1">
 						<MaterialIcons name={"call"} size={25} color="#000" />
 						<Text className="text-base">11 90000-0000</Text>
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 				</View>
 				<View>
