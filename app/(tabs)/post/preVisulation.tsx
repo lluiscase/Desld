@@ -96,9 +96,8 @@ export default function PreVisulation() {
 			</View>
 			<AdConfirmationModalTailwind
 				isVisible={isModalVisible}
-				onContinue={handleModalContinue} // Navega apenas se Continuar for pressionado
-				onClose={handleModalClose} // Fecha se o usuário tentar sair (ex: botão Voltar no Android)
-			/>
+				onContinue={handleModalContinue}
+				onClose={handleModalClose}/>
 		</View>
 	);
 }
