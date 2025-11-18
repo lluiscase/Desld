@@ -1,21 +1,24 @@
-import { Link, router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Button from "../../../src/components/Button";
 import Carousel from "../../../src/components/Carousel";
 import AdConfirmationModalTailwind from "../../../src/components/Modals/AdModal";
 import TextArea from "../../../src/components/TextArea";
 
-
-
 export default function AnimalSelect() {
+	const { query } = useLocalSearchParams();
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const NEXT_PAGE = "/(tabs)/post";
+	console.log(query);
 
-  const handleGoBack = () => {
-    router.back();
-  };
+	const handleGoBack = () => {
+		if (query !== "home") {
+			router.back();
+		} else {
+			router.push({ pathname: "/home" });
+		}
+	};
 	const handleNextPress = () => {
 		setIsModalVisible(true);
 	};
@@ -54,7 +57,6 @@ export default function AnimalSelect() {
 				<View className="my-2">
 					<View className="flex-row items-center gap-1">
 						<Text className="text-base font-semibold">Descrição:</Text>
-						<MaterialIcons name={"edit"} size={25} color="#767676" />
 					</View>
 					<TextArea />
 				</View>
@@ -78,20 +80,12 @@ export default function AnimalSelect() {
 						<Text className="text-base">11 90000-0000</Text>
 					</View>
 				</View>
-				<View>
-					<Button text="Próximo" onPress={handleNextPress} />
-					<Link
-						className="text-center pt-4 text-red text-base"
-						href="/(tabs)/post"
-					>
-						Cancelar
-					</Link>
-				</View>
 			</View>
 			<AdConfirmationModalTailwind
 				isVisible={isModalVisible}
 				onContinue={handleModalContinue}
-				onClose={handleModalClose}/>
+				onClose={handleModalClose}
+			/>
 		</View>
 	);
 }

@@ -11,7 +11,7 @@ export default function Home() {
 		<View className="flex-1 flex-col px-8 bg-white pt-24">
 			<View className="flex-row justify-between itmems-center mb-6">
 				<Text className="text-blue-400 text-4xl font-bold">AuHelp</Text>
-				<Perfil />
+				<Perfil x={47}/>
 			</View>
 			<ScrollView showsHorizontalScrollIndicator={false}>
 				<Image

@@ -13,7 +13,7 @@ export default function Search() {
 						filter
 						placeholder="Procurar animal, ong ou localização"
 					/>
-					<Perfil />
+					<Perfil x={47}/>
 				</View>
 			</SafeAreaView>
 		</ImageBackground>
