@@ -37,7 +37,6 @@ export default function AppLayout() {
 				name="search"
 				options={{
 					title: "Pesquisar",
-					unmountOnBlur: true,
 				}}
 			/>
       <Tabs.Screen
