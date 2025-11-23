@@ -48,7 +48,7 @@ export default function Photo() {
 		// 		}
 		// 	}
 		// }
-		router.push("/(tabs)/post/typeAnimal");
+		router.push("/(tabs)/post/situation");
 	};
 
 	const openMediaLibrary = async () => {

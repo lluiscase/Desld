@@ -5,7 +5,6 @@ export default function PostFlowLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false}} />
       <Stack.Screen name="photo" options={{ headerShown: false }} />
-      <Stack.Screen name="typeAnimal" options={{ headerShown: false }} />
       <Stack.Screen name="situation" options={{ headerShown: false }} />
       <Stack.Screen name="description" options={{ headerShown: false }} />
       <Stack.Screen name="preVisulation" options={{ headerShown: false }} />
