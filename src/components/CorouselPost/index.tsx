@@ -101,9 +101,11 @@ export default function CorouselPost() {
 					<Icon name="arrow-forward-ios" size={24} color="#333" />
 				</TouchableOpacity>
 			</View>
-      <View>
-        <Text className="text-base text-center px-8 pt-8 text-black">{carouselItems[activeIndex].descripition}</Text>
-      </View>
+			<View>
+				<Text className="text-base text-center px-8 pt-8 text-black">
+					{carouselItems[activeIndex].descripition}
+				</Text>
+			</View>
 		</View>
 	);
 }

@@ -7,9 +7,11 @@ interface PaginationIndicatorProps {
 const totalSlides = 5;
 let activeIndex = 0;
 
-export default function PaginationIndicator ({position}:PaginationIndicatorProps) {
+export default function PaginationIndicator({
+	position,
+}: PaginationIndicatorProps) {
 	const data = Array.from({ length: totalSlides }, (_, index) => index);
-  activeIndex = position;
+	activeIndex = position;
 	return (
 		<View className="flex-row justify-center mt-6">
 			{data.map((_, index) => (
@@ -24,4 +26,4 @@ export default function PaginationIndicator ({position}:PaginationIndicatorProps
 			))}
 		</View>
 	);
-};
+}

@@ -1,11 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
-import {
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type TagItem = {
@@ -41,9 +36,9 @@ export const TagSelector = () => {
 		});
 	};
 
-  const clearAll = () => {
-    setSelectedIds([]);
-  };
+	const clearAll = () => {
+		setSelectedIds([]);
+	};
 
 	const { selectedItems, availableItems } = useMemo(() => {
 		const selected: TagItem[] = [];
@@ -89,15 +84,15 @@ export const TagSelector = () => {
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="mb-4">
 				<View className="flex-row justify-between items-center mb-2">
-          <Text className="text-xl font-semibold">
-            Adicione especificações:
-          </Text>
-          {selectedItems.length > 0 && (
-            <TouchableOpacity onPress={clearAll} className="p-1">
-              <MaterialIcons name="delete-sweep" size={24} color="#6B7280" />
-            </TouchableOpacity>
-          )}
-        </View>
+					<Text className="text-xl font-semibold">
+						Adicione especificações:
+					</Text>
+					{selectedItems.length > 0 && (
+						<TouchableOpacity onPress={clearAll} className="p-1">
+							<MaterialIcons name="delete-sweep" size={24} color="#6B7280" />
+						</TouchableOpacity>
+					)}
+				</View>
 				<View
 					className="flex-row flex-wrap rounded-lg bg-gray-100 p-2"
 					style={{ minHeight: 100 }}

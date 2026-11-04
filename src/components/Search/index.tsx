@@ -6,22 +6,27 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 interface InputProps {
 	placeholder: string;
 	showLabel?: string;
-  filter?:boolean;
+	filter?: boolean;
 }
 
-export default function InputSearch({ placeholder, showLabel, filter }: InputProps) {
+export default function InputSearch({
+	placeholder,
+	showLabel,
+	filter,
+}: InputProps) {
 	const [text, setText] = useState("");
 	const inputRef = useRef<TextInput>(null);
-  const router = useRouter()
+	const router = useRouter();
 
-  const handleSearchSubmit = () => {
-    if (filter) {
-      inputRef.current?.blur();
-      router.push({
-        pathname: "/search/resultSearch", // O caminho da rota (sem o '(tabs)')
-        params: { query: text },
-    })
-  }}
+	const handleSearchSubmit = () => {
+		if (filter) {
+			inputRef.current?.blur();
+			router.push({
+				pathname: "/search/resultSearch", // O caminho da rota (sem o '(tabs)')
+				params: { query: text },
+			});
+		}
+	};
 
 	const handlePress = useCallback(() => {
 		inputRef.current?.focus();
@@ -46,16 +51,15 @@ export default function InputSearch({ placeholder, showLabel, filter }: InputPro
 					onChangeText={setText}
 					underlineColorAndroid="transparent"
 					multiline={false}
-
-          onSubmitEditing={handleSearchSubmit}
-          returnKeyType="search"
+					onSubmitEditing={handleSearchSubmit}
+					returnKeyType="search"
 				/>
 				<MaterialIcons name="search" size={34} color="#767676" />
-        <View className="border-l ml-1 pl-1 border-gray-400">
-          {filter &&(
-				  <MaterialIcons name="filter-list" size={34} color="#767676" />
-        )}
-        </View>
+				<View className="border-l ml-1 pl-1 border-gray-400">
+					{filter && (
+						<MaterialIcons name="filter-list" size={34} color="#767676" />
+					)}
+				</View>
 			</TouchableOpacity>
 		</View>
 	);

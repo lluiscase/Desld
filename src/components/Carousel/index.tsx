@@ -53,7 +53,7 @@ export default function Corousel() {
 					width={ITEM_WIDTH}
 					height={ITEM_HEIGHT}
 					autoPlay={true}
-          autoPlayInterval={5000}
+					autoPlayInterval={5000}
 					data={carouselItems}
 					renderItem={renderItem}
 					windowSize={1}

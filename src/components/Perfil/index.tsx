@@ -6,8 +6,7 @@ interface PerfilProps {
 	x: number;
 }
 
-
-export default function Perfil({x}:PerfilProps) {
+export default function Perfil({ x }: PerfilProps) {
 	const router = useRouter();
 	const handlePress = () => {
 		router.push("/user");
@@ -18,10 +17,7 @@ export default function Perfil({x}:PerfilProps) {
 			onPress={handlePress}
 			className="flex flex-col items-center"
 		>
-			<Image
-				source={User}
-				style={{ width: x, height: x, borderRadius: 40 }}
-			/>
+			<Image source={User} style={{ width: x, height: x, borderRadius: 40 }} />
 		</TouchableOpacity>
 	);
 }

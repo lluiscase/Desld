@@ -18,7 +18,9 @@ export default function Initial() {
 					Registrar
 				</Link>
 				<View>
-					<Text className="text-blue-400">Ao fazer login voce concorda com nossos</Text>
+					<Text className="text-blue-400">
+						Ao fazer login voce concorda com nossos
+					</Text>
 					<Text>Temos e Condiçoes e Politica de Privacidade</Text>
 				</View>
 			</View>
