@@ -1,36 +1,40 @@
-// Em app/(tabs)/search/resultSearch.tsx
-import { router, useLocalSearchParams } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import CardAnimal from "../../../src/components/CardAnimal";
-import InputSearch from "../../../src/components/Search";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { usePetListQuery } from "@/entities/pet";
+import { ArrowLeft } from "@/shared/icons";
+import { PetFeed } from "@/widgets/PetFeed";
 
-export default function ResultSearch() {
-	const { query } = useLocalSearchParams();
-	const quantidade = 150;
+export default function ResultSearchRoute() {
+	const router = useRouter();
+	const { query } = useLocalSearchParams<{ query?: string }>();
+	const { data: pets = [], isLoading } = usePetListQuery();
 
-	const handleGoBack = () => {
-		router.back();
-	};
 	return (
-		<View className="flex-1 flex-col px-8 bg-white pt-12">
-			<View className="pb-8">
-				<TouchableOpacity className="mr-3" onPress={handleGoBack}>
-					<MaterialIcons name={"arrow-back"} size={25} color="#000" />
+		<SafeAreaView className="flex-1 bg-white">
+			<View className="px-5 pt-3 pb-2 flex-row items-center">
+				<TouchableOpacity
+					accessibilityRole="button"
+					accessibilityLabel="Voltar"
+					onPress={() => router.back()}
+					className="p-1 mr-2"
+				>
+					<ArrowLeft size={24} color="#42A5F5" />
 				</TouchableOpacity>
+				<Text className="text-xl font-bold text-gray-900">
+					Busca: {query || "Geral"}
+				</Text>
 			</View>
-			<InputSearch filter placeholder={`${query}`} />
-			<Text className="opacity-[0.5] py-2">{`${quantidade} resultados para “Valo velho”`}</Text>
-			<ScrollView>
-				<View className="flex flex-row flex-wrap justify-between pt-6">
-					<CardAnimal id="1" name="rex" date={12} />
-					<CardAnimal id="2" date={1} />
-					<CardAnimal id="3" name="rex" date={7} />
-					<CardAnimal id="4" name="rex" date={3} />
-					<CardAnimal id="5" date={10} />
-				</View>
-			</ScrollView>
-		</View>
+
+			<PetFeed
+				pets={pets}
+				isLoading={isLoading}
+				onPetSelect={(id) =>
+					router.push({
+						pathname: "/(tabs)/search/animalSelect",
+						params: { id },
+					})
+				}
+			/>
+		</SafeAreaView>
 	);
 }

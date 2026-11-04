@@ -1,40 +1,88 @@
-import { useNavigation } from "@react-navigation/native";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ArrowLeft, Mail } from "@/shared/icons";
+import { AppButton, AppInput } from "@/shared/ui";
 import Password from "../../assets/password.png";
-import Button from "../../src/components/Button";
-import Input from "../../src/components/Input";
 
-export default function Register() {
-	const navigation = useNavigation();
+export default function ForgotPasswordRoute() {
+	const router = useRouter();
+	const [email, setEmail] = useState("");
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const handleGoBack = () => {
-		navigation.goBack();
+	const handleSubmit = () => {
+		if (email.trim().length > 0) {
+			setIsSubmitted(true);
+		}
 	};
 
 	return (
-		<View className="flex-1 flex flex-col bg-blue-400 ">
-			<View className="flex flex-col justify-end p-8 pb-4 h-[174px]">
-				<View className="flex flex-row items-center">
-					<TouchableOpacity className="mr-3" onPress={handleGoBack}>
-						<MaterialIcons name={"arrow-back"} size={25} color="#fff" />
+		<View className="flex-1 bg-blue-400">
+			<View className="p-6 pt-12 pb-4">
+				<View className="flex-row items-center">
+					<TouchableOpacity
+						accessibilityRole="button"
+						accessibilityLabel="Voltar"
+						onPress={() => router.back()}
+						className="p-1 mr-2"
+					>
+						<ArrowLeft size={24} color="#FFFFFF" />
 					</TouchableOpacity>
-					<Text className="text-white text-4xl font-bold">
+					<Text className="text-white text-3xl font-bold">
 						Esqueceu a senha?
 					</Text>
 				</View>
-				<Text className="text-white opacity-2 pl-10 pt-2 text-base font-bold">
-					Preencha seus dados
+				<Text className="text-white/80 pl-9 pt-1 text-sm font-semibold">
+					Preencha seus dados para recuperação
 				</Text>
 			</View>
-			<View className="flex-1 flex flex-col justify-between items-center bg-white px-8 pt-[80px] pb-[125px] rounded-t-3xl">
-				<Image source={Password} />
-				<Text className="text-center text-xl">{"Digite seu e-mail para\nreceber um link de redefinição."}</Text>
-				<View className="w-full">
-					<Input inputType="email" />
+
+			<ScrollView
+				className="flex-1 bg-white rounded-t-3xl px-6 pt-10"
+				contentContainerStyle={{
+					flexGrow: 1,
+					justifyContent: "space-between",
+					paddingBottom: 40,
+				}}
+				showsVerticalScrollIndicator={false}
+			>
+				<View className="items-center gap-6">
+					<Image source={Password} resizeMode="contain" />
+
+					<Text className="text-center text-lg text-gray-700 leading-6">
+						{isSubmitted
+							? `Enviamos as instruções de redefinição para:\n${email}`
+							: "Digite seu e-mail cadastrado para receber as instruções de redefinição de senha."}
+					</Text>
+
+					{!isSubmitted ? (
+						<AppInput
+							label="E-mail"
+							placeholder="Digite seu e-mail"
+							keyboardType="email-address"
+							autoCapitalize="none"
+							value={email}
+							onChangeText={setEmail}
+							leftIcon={<Mail size={20} color="#767676" />}
+						/>
+					) : null}
 				</View>
-				<Button text="Enviar" href="/login" />
-			</View>
+
+				<View className="pt-6">
+					{!isSubmitted ? (
+						<AppButton
+							title="Enviar Link de Recuperação"
+							onPress={handleSubmit}
+						/>
+					) : (
+						<AppButton
+							title="Voltar para o Login"
+							variant="outline"
+							onPress={() => router.replace("/(auth)/login")}
+						/>
+					)}
+				</View>
+			</ScrollView>
 		</View>
 	);
 }

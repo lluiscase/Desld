@@ -1,6 +1,6 @@
+import { router } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import imgDog from "../../../assets/Dog.png";
-import { router } from "expo-router";
 
 type PostSituation = "Perdido" | "Abandonado" | "Adocao";
 
@@ -23,12 +23,15 @@ export default function Post({ name, type, situation, time }: PostProps) {
 	if (situation === "Adocao") {
 		backgroundColorSituation = "bg-green";
 	}
-  const handlePress = () => {
+	const handlePress = () => {
 		router.push({ pathname: "/post/preVisulation" });
 	};
 
 	return (
-		<TouchableOpacity onPress={handlePress} className="flex flex-row p-2 rounded-lg bg-gray-300 w-full">
+		<TouchableOpacity
+			onPress={handlePress}
+			className="flex flex-row p-2 rounded-lg bg-gray-300 w-full"
+		>
 			<Image
 				source={imgDog}
 				style={{ width: 105, height: 91, borderRadius: 5 }}

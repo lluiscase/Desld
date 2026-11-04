@@ -7,9 +7,9 @@ interface PerfilProps {
 }
 
 export default function Pets({ name }: PerfilProps) {
-  const home = "home"
+	const home = "home";
 	const handlePress = () => {
-		router.push({ pathname: "/search/animalSelect", params: {home} });
+		router.push({ pathname: "/search/animalSelect", params: { home } });
 	};
 
 	return (

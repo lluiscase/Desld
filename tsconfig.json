@@ -1,8 +1,24 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "jsx": "react-jsx",
-    "typeRoots": ["./node_modules/@types", "./src/types"]
-  }
+	"extends": "expo/tsconfig.base",
+	"compilerOptions": {
+		"strict": true,
+		"jsx": "react-jsx",
+		"typeRoots": ["./node_modules/@types"],
+		"baseUrl": ".",
+		"paths": {
+			"@/app/*": ["app/*"],
+			"@/widgets/*": ["src/widgets/*"],
+			"@/features/*": ["src/features/*"],
+			"@/entities/*": ["src/entities/*"],
+			"@/shared/*": ["src/shared/*"]
+		}
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		".expo/types/**/*.ts",
+		"expo-env.d.ts",
+		"declarations.d.ts",
+		"nativewind-env.d.ts"
+	]
 }

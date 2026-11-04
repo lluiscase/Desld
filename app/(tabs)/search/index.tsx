@@ -1,21 +1,36 @@
-import { ImageBackground, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import map from "../../../assets/map.png";
-import Perfil from "../../../src/components/Perfil";
-import InputSearch from "../../../src/components/Search";
+import { useRouter } from "expo-router";
+import { SafeAreaView, Text, View } from "react-native";
+import { usePetListQuery } from "@/entities/pet";
+import { PetFeed } from "@/widgets/PetFeed";
 
-export default function Search() {
+export default function SearchRoute() {
+	const router = useRouter();
+	const { data: pets = [], isLoading } = usePetListQuery();
+
+	const handlePetSelect = (petId: string) => {
+		router.push({
+			pathname: "/(tabs)/search/animalSelect",
+			params: { id: petId },
+		});
+	};
+
 	return (
-		<ImageBackground source={map} className="flex-1" resizeMode="cover">
-			<SafeAreaView>
-				<View className="px-12 pt-24 flex-row items-center justify-center gap-1">
-					<InputSearch
-						filter
-						placeholder="Procurar animal, ong ou localização"
-					/>
-					<Perfil x={47}/>
-				</View>
-			</SafeAreaView>
-		</ImageBackground>
+		<SafeAreaView className="flex-1 bg-white">
+			<View className="px-5 pt-3 pb-1">
+				<Text className="text-2xl font-bold text-gray-900">
+					Explorar e Buscar
+				</Text>
+				<Text className="text-sm text-gray-500">
+					Encontre animais perdidos ou ONGs perto de você
+				</Text>
+			</View>
+
+			<PetFeed
+				pets={pets}
+				isLoading={isLoading}
+				onPetSelect={handlePetSelect}
+				headerTitle="Resultados de Busca"
+			/>
+		</SafeAreaView>
 	);
 }
