@@ -9,3 +9,8 @@ export {
 	userSessionSchema,
 } from "./model/schemas";
 export { useSessionStore } from "./model/useSessionStore";
+export {
+	UserAvatarButton,
+	UserAvatarButton as Perfil,
+	type UserAvatarButtonProps,
+} from "./ui/UserAvatarButton";
