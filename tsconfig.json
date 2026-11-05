@@ -8,8 +8,11 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@/app": [
+        "src/app/index.ts"
+      ],
       "@/app/*": [
-        "app/*"
+        "src/app/*"
       ],
       "@/widgets/*": [
         "src/widgets/*"

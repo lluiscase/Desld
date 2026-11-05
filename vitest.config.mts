@@ -9,7 +9,7 @@ export default defineConfig({
 		alias: {
 			"react-native": "react-native-web",
 			"expo-router": path.resolve(rootDir, "./src/shared/lib/test-mocks/expo-router.ts"),
-			"@/app": path.resolve(rootDir, "./app"),
+			"@/app": path.resolve(rootDir, "./src/app"),
 			"@/widgets": path.resolve(rootDir, "./src/widgets"),
 			"@/features": path.resolve(rootDir, "./src/features"),
 			"@/entities": path.resolve(rootDir, "./src/entities"),
