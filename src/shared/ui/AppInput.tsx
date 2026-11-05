@@ -1,14 +1,55 @@
 import { forwardRef, useState } from "react";
 import {
+	type KeyboardType,
 	Text,
 	TextInput,
 	type TextInputProps,
 	TouchableOpacity,
 	View,
 } from "react-native";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Eye, EyeOff } from "../icons";
 
+export type AppInputType = "email" | "password" | "name" | "passwordRerun";
+
+const INPUT_CONFIG: Record<
+	AppInputType,
+	{
+		icon: string;
+		placeholder: string;
+		keyboardType: KeyboardType;
+		label: string;
+	}
+> = {
+	name: {
+		icon: "person",
+		placeholder: "Seu Nome Completo",
+		keyboardType: "default",
+		label: "Nome Completo",
+	},
+	email: {
+		icon: "mail",
+		placeholder: "Digite seu Email:",
+		keyboardType: "email-address",
+		label: "Email",
+	},
+	password: {
+		icon: "lock",
+		placeholder: "Crie sua senha:",
+		keyboardType: "default",
+		label: "Senha",
+	},
+	passwordRerun: {
+		icon: "lock",
+		placeholder: "Crie sua senha:",
+		keyboardType: "default",
+		label: "Confirmar senha",
+	},
+};
+
 export interface AppInputProps extends TextInputProps {
+	inputType?: AppInputType;
+	showLabel?: boolean;
 	label?: string;
 	error?: string;
 	helperText?: string;
@@ -22,12 +63,16 @@ export interface AppInputProps extends TextInputProps {
 export const AppInput = forwardRef<TextInput, AppInputProps>(
 	(
 		{
+			inputType,
+			showLabel = true,
 			label,
+			placeholder,
+			keyboardType,
 			error,
 			helperText,
 			leftIcon,
 			rightIcon,
-			isPassword = false,
+			isPassword,
 			containerClassName = "",
 			inputClassName = "",
 			secureTextEntry,
@@ -40,32 +85,56 @@ export const AppInput = forwardRef<TextInput, AppInputProps>(
 		const [isFocused, setIsFocused] = useState(false);
 		const [showPassword, setShowPassword] = useState(false);
 
-		const isSecured = isPassword ? !showPassword : secureTextEntry;
+		const config = inputType ? INPUT_CONFIG[inputType] : undefined;
+		const resolvedLabel =
+			label ?? (showLabel && config ? config.label : undefined);
+		const resolvedPlaceholder =
+			placeholder ?? (config ? config.placeholder : undefined);
+		const resolvedKeyboardType =
+			keyboardType ?? (config ? config.keyboardType : "default");
+		const isPasswordField =
+			isPassword !== undefined
+				? isPassword
+				: inputType === "password" || inputType === "passwordRerun";
+
+		const isSecured = isPasswordField ? !showPassword : secureTextEntry;
+
+		const resolvedLeftIcon =
+			leftIcon !== undefined ? (
+				leftIcon
+			) : config ? (
+				<MaterialIcons name={config.icon} size={34} color="#767676" />
+			) : null;
 
 		return (
-			<View className={`w-full ${containerClassName}`}>
-				{label ? (
-					<Text className="text-gray-700 font-medium text-sm mb-1.5">
-						{label}
+			<View className={`w-full mt-4 ${containerClassName}`}>
+				{resolvedLabel ? (
+					<Text className="mb-2 text-xl font-bold text-blue-400">
+						{resolvedLabel}
 					</Text>
 				) : null}
 
 				<View
-					className={`w-full h-14 flex-row items-center px-4 rounded-lg bg-gray-100 border ${
+					className={`flex-row items-center px-4 w-full h-[60px] rounded border ${
 						error
 							? "border-red-500"
 							: isFocused
 								? "border-blue-400"
-								: "border-gray-200"
+								: "border-gray-500"
 					}`}
 				>
-					{leftIcon ? <View className="mr-3">{leftIcon}</View> : null}
+					{resolvedLeftIcon ? (
+						<View className="mr-3">{resolvedLeftIcon}</View>
+					) : null}
 
 					<TextInput
 						ref={ref}
-						className={`flex-1 text-base text-gray-900 ${inputClassName}`}
-						placeholderTextColor="#767676"
+						className={`flex-1 text-base text-gray-900 focus:border-none focus:outline-none ${inputClassName}`}
+						placeholder={resolvedPlaceholder}
+						placeholderTextColor="#A0A0A0"
 						secureTextEntry={isSecured}
+						keyboardType={resolvedKeyboardType}
+						underlineColorAndroid="transparent"
 						onFocus={(e) => {
 							setIsFocused(true);
 							onFocus?.(e);
@@ -77,7 +146,7 @@ export const AppInput = forwardRef<TextInput, AppInputProps>(
 						{...rest}
 					/>
 
-					{isPassword ? (
+					{isPasswordField ? (
 						<TouchableOpacity
 							accessibilityRole="button"
 							accessibilityLabel={
@@ -88,9 +157,9 @@ export const AppInput = forwardRef<TextInput, AppInputProps>(
 							className="p-1"
 						>
 							{showPassword ? (
-								<EyeOff size={20} color="#767676" />
+								<EyeOff size={24} color="#767676" />
 							) : (
-								<Eye size={20} color="#767676" />
+								<Eye size={24} color="#767676" />
 							)}
 						</TouchableOpacity>
 					) : rightIcon ? (
@@ -99,7 +168,7 @@ export const AppInput = forwardRef<TextInput, AppInputProps>(
 				</View>
 
 				{error ? (
-					<Text className="text-red-500 text-xs mt-1 font-medium">{error}</Text>
+					<Text className="mt-1 text-red-500">{error}</Text>
 				) : helperText ? (
 					<Text className="text-gray-400 text-xs mt-1">{helperText}</Text>
 				) : null}

@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import type React from "react";
 import {
 	ActivityIndicator,
@@ -10,7 +11,9 @@ export type ButtonVariant = "primary" | "secondary" | "outline";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface AppButtonProps extends TouchableOpacityProps {
-	title: string;
+	title?: string;
+	text?: string;
+	href?: string;
 	variant?: ButtonVariant;
 	size?: ButtonSize;
 	loading?: boolean;
@@ -25,39 +28,43 @@ const variantStyles: Record<
 	{ container: string; text: string; spinner: string }
 > = {
 	primary: {
-		container: "bg-blue-400 active:bg-blue-500 border border-transparent",
-		text: "text-white font-bold",
+		container: "bg-blue-400 active:bg-blue-500",
+		text: "text-white font-bold text-lg",
 		spinner: "#FFFFFF",
 	},
 	secondary: {
 		container: "bg-gray-100 active:bg-gray-200 border border-gray-200",
-		text: "text-gray-800 font-semibold",
+		text: "text-gray-800 font-semibold text-lg",
 		spinner: "#4A4A4A",
 	},
 	outline: {
 		container: "bg-transparent active:bg-blue-50 border border-blue-400",
-		text: "text-blue-400 font-bold",
+		text: "text-blue-400 font-bold text-lg",
 		spinner: "#42A5F5",
 	},
 };
 
 const sizeStyles: Record<ButtonSize, { container: string; text: string }> = {
 	sm: {
-		container: "h-10 px-3 rounded-md",
+		container: "h-10 px-3 rounded",
 		text: "text-sm",
 	},
 	md: {
-		container: "h-14 px-4 rounded-lg",
-		text: "text-base",
+		container:
+			"p-4 w-full md:w-[376px] h-[56px] rounded items-center justify-center",
+		text: "text-lg",
 	},
 	lg: {
-		container: "h-16 px-6 rounded-xl",
+		container:
+			"p-4 w-full md:w-[376px] h-[56px] rounded items-center justify-center",
 		text: "text-lg",
 	},
 };
 
 export function AppButton({
 	title,
+	text,
+	href,
 	variant = "primary",
 	size = "md",
 	loading = false,
@@ -69,9 +76,20 @@ export function AppButton({
 	onPress,
 	...rest
 }: AppButtonProps) {
+	const router = useRouter();
+	const buttonLabel = title ?? text ?? "";
 	const currentVariant = variantStyles[variant];
 	const currentSize = sizeStyles[size];
 	const isDisabled = disabled || loading;
+
+	const handlePress = (e: any) => {
+		if (isDisabled) return;
+		if (onPress) {
+			onPress(e);
+		} else if (href) {
+			router.push(href as any);
+		}
+	};
 
 	return (
 		<TouchableOpacity
@@ -79,9 +97,9 @@ export function AppButton({
 			accessibilityState={{ disabled: isDisabled, busy: loading }}
 			activeOpacity={0.8}
 			disabled={isDisabled}
-			onPress={onPress}
-			className={`w-full flex-row items-center justify-center ${currentSize.container} ${currentVariant.container} ${
-				isDisabled ? "opacity-50" : ""
+			onPress={handlePress}
+			className={`flex-row items-center justify-center ${currentSize.container} ${
+				isDisabled ? "bg-gray-400" : currentVariant.container
 			} ${className}`}
 			{...rest}
 		>
@@ -95,7 +113,7 @@ export function AppButton({
 							leftIcon ? "ml-2" : ""
 						} ${rightIcon ? "mr-2" : ""} ${textClassName}`}
 					>
-						{title}
+						{buttonLabel}
 					</Text>
 					{rightIcon}
 				</>
