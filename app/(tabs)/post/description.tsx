@@ -2,10 +2,9 @@ import { Link, router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Button from "../../../src/components/Button";
-import InputSearch from "../../../src/components/Search";
-import TagSelector from "../../../src/components/TagSelector";
-import TextArea from "../../../src/components/TextArea";
+import { RescueTagSelector as TagSelector } from "@/features/create-rescue-report";
+import { SearchInput as InputSearch } from "@/features/search-pets";
+import { AppButton as Button, TextArea } from "@/shared/ui";
 
 const handleGoBack = () => {
 	router.back();

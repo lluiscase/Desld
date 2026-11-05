@@ -2,8 +2,7 @@ import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { useSessionStore } from "@/entities/user";
-import Perfil from "../../../src/components/Perfil";
+import { UserAvatarButton as Perfil, useSessionStore } from "@/entities/user";
 
 export default function User() {
 	const router = useRouter();

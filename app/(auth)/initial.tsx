@@ -1,9 +1,9 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
+import { AppButton as Button } from "@/shared/ui";
 import WomanAndDog from "../../assets/womanAndDog.png";
-import Button from "../../src/components/Button";
-import "../../src/styles/global.css";
+import "@/shared/theme/global.css";
 
 export default function Initial() {
 	return (

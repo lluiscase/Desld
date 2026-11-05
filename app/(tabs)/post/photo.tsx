@@ -12,7 +12,7 @@ import {
 	View,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Button from "../../../src/components/Button";
+import { AppButton as Button } from "@/shared/ui";
 
 export default function Photo() {
 	const [cameraPermission, requestCameraPermission] = useCameraPermissions();

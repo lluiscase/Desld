@@ -2,9 +2,8 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { AppButton as Button, AppInput as Input } from "@/shared/ui";
 import Password from "../../assets/password.png";
-import Button from "../../src/components/Button";
-import Input from "../../src/components/Input";
 
 export default function ForgotPassword() {
 	const router = useRouter();

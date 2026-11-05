@@ -2,9 +2,8 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { usePetListQuery } from "@/entities/pet";
-import CardAnimal from "../../../src/components/CardAnimal";
-import InputSearch from "../../../src/components/Search";
+import { PetCard, usePetListQuery } from "@/entities/pet";
+import { SearchInput as InputSearch } from "@/features/search-pets";
 
 export default function ResultSearch() {
 	const router = useRouter();
@@ -16,6 +15,13 @@ export default function ResultSearch() {
 		router.back();
 	};
 
+	const handlePetPress = (id: string) => {
+		router.push({
+			pathname: "/search/animalSelect" as any,
+			params: { id },
+		});
+	};
+
 	return (
 		<View className="flex-1 flex-col px-8 bg-white pt-12">
 			<View className="pb-8">
@@ -25,28 +31,13 @@ export default function ResultSearch() {
 			</View>
 			<InputSearch filter placeholder={`${query || ""}`} />
 			<Text className="opacity-[0.5] py-2">
-				{`${quantidade} resultados para “${query || "Valo velho"}”`}
+				{`${quantidade} resultados para "${query || "Valo velho"}"`}
 			</Text>
 			<ScrollView>
 				<View className="flex flex-row flex-wrap justify-between pt-6">
-					{pets.length > 0 ? (
-						pets.map((pet) => (
-							<CardAnimal
-								key={pet.id}
-								id={pet.id}
-								name={pet.name ?? undefined}
-								date={pet.daysCount || 7}
-							/>
-						))
-					) : (
-						<>
-							<CardAnimal id="1" name="rex" date={12} />
-							<CardAnimal id="2" date={1} />
-							<CardAnimal id="3" name="rex" date={7} />
-							<CardAnimal id="4" name="rex" date={3} />
-							<CardAnimal id="5" date={10} />
-						</>
-					)}
+					{pets.map((pet) => (
+						<PetCard key={pet.id} pet={pet} onPress={handlePetPress} />
+					))}
 				</View>
 			</ScrollView>
 		</View>

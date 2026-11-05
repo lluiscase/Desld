@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { usePetDetailsQuery } from "@/entities/pet";
-import Carousel from "../../../src/components/Carousel";
-import AdConfirmationModalTailwind from "../../../src/components/Modals/AdModal";
-import TextArea from "../../../src/components/TextArea";
+import { AdConfirmationModal as AdConfirmationModalTailwind } from "@/features/create-rescue-report";
+import { ImageCarousel as Carousel, TextArea } from "@/shared/ui";
 
 export default function AnimalSelect() {
 	const router = useRouter();

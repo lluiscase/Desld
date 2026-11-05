@@ -1,11 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
-import { usePetListQuery } from "@/entities/pet";
+import "@/shared/theme/global.css";
+import { PetAvatarItem as Pets, usePetListQuery } from "@/entities/pet";
+import { UserAvatarButton as Perfil } from "@/entities/user";
+import { TipCard as Dicas } from "@/shared/ui";
 import Banner from "../../assets/Banner.png";
-import Dicas from "../../src/components/Dicas";
-import Perfil from "../../src/components/Perfil";
-import Pets from "../../src/components/Pets";
-import "../../src/styles/global.css";
 
 export default function Home() {
 	const { data: pets = [] } = usePetListQuery();

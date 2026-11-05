@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Post from "../../../src/components/Post";
+import { PetPostCard as Post } from "@/entities/pet";
 
 export default function History() {
 	const handleGoBack = () => {

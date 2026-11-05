@@ -1,8 +1,8 @@
 import { ImageBackground, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { UserAvatarButton as Perfil } from "@/entities/user";
+import { SearchInput as InputSearch } from "@/features/search-pets";
 import map from "../../../assets/map.png";
-import Perfil from "../../../src/components/Perfil";
-import InputSearch from "../../../src/components/Search";
 
 export default function Search() {
 	return (

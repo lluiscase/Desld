@@ -1,8 +1,8 @@
 import { Link } from "expo-router";
 import { Image, Text, View } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { AppButton as Button } from "@/shared/ui";
 import DogPost from "../../../assets/DogPost.png";
-import Button from "../../../src/components/Button";
 
 export default function Post() {
 	return (
