@@ -1,93 +1,61 @@
 import { useRouter } from "expo-router";
-import {
-	SafeAreaView,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useSessionStore } from "@/entities/user";
-import { ArrowLeft, LogOut } from "@/shared/icons";
 import Perfil from "../../../src/components/Perfil";
 
-export default function UserRoute() {
+export default function User() {
 	const router = useRouter();
 	const { user, clearSession } = useSessionStore();
 
+	const handleGoBack = () => {
+		router.back();
+	};
+
 	const handleSignOut = async () => {
 		await clearSession();
-		router.replace("/(auth)/login");
+		router.replace("/login" as any);
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="px-6 pt-3 pb-2 flex-row items-center">
-				<TouchableOpacity
-					accessibilityRole="button"
-					accessibilityLabel="Voltar"
-					onPress={() => router.back()}
-					className="p-1 mr-2"
-				>
-					<ArrowLeft size={24} color="#000" />
+		<View className="flex-1 pt-24 bg-white">
+			<View className="px-12">
+				<TouchableOpacity className="mr-3" onPress={handleGoBack}>
+					<MaterialIcons name={"arrow-back"} size={25} color="#000" />
 				</TouchableOpacity>
-				<Text className="text-xl font-bold text-gray-900">Meu Perfil</Text>
 			</View>
-
-			<ScrollView
-				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ paddingBottom: 40 }}
-			>
-				<View className="items-center py-4 gap-2">
-					<Perfil x={120} />
-					<Text className="text-2xl font-bold text-gray-800">
-						{user?.name || "Usuário AuHelp"}
+			<ScrollView>
+				<View className="flex items-center gap-2 pb-4">
+					<Perfil x={150} />
+					<Text className="text-2xl pb-4">Pit bull</Text>
+					<Text className="bg-blue-400 text-4xl p-3 rounded-full text-white font-bold">
+						15
 					</Text>
-					<View className="flex-row items-center gap-2 mt-2">
-						<View className="bg-blue-400 px-4 py-1.5 rounded-full">
-							<Text className="text-white font-bold text-base">15</Text>
-						</View>
-						<Text className="text-base text-gray-600 font-medium">
-							Assistências Concluídas
-						</Text>
-					</View>
+					<Text className="text-xl">Assistências</Text>
 				</View>
-
-				<View className="bg-blue-400 mx-4 rounded-2xl p-5 gap-3 shadow-sm">
-					<Text className="text-white font-semibold text-base">
+				<View className="bg-blue-400 px-12 rounded-t-3xl pt-6 pb-12 gap-4">
+					<Text className="text-xl text-white">
 						Nome: {user?.name || "Anna Faustino"}
 					</Text>
-					<Text className="text-white font-semibold text-base">
-						Email: {user?.email || "annabanana@gmail.com"}
+					<Text className="text-xl text-white">
+						Email: {user?.email || "Annabanana@gmail.com"}
 					</Text>
-					<Text className="text-white font-semibold text-base">
-						Telefone: (11) 98765-4321
-					</Text>
+					<Text className="text-xl text-white">Número: (11) 1234-5678</Text>
+					<Text className="text-xl text-white">CPF: **** **** ***-02</Text>
 				</View>
-
-				<View className="px-6 py-6 gap-3">
-					<Text className="text-xl font-bold text-gray-800">Preferências</Text>
-					<Text className="text-base text-gray-600">Raio de busca: 50 km</Text>
-					<Text className="text-base text-gray-600">
-						Notificações: Ativadas
-					</Text>
-					<Text className="text-base text-gray-600">
-						Modo anônimo: Desativado
-					</Text>
+				<View className="bg-white px-12 rounded-t-3xl py-4 gap-4 -mt-8 ">
+					<Text className="text-3xl">Preferências</Text>
+					<Text className="text-xl ">Distancia de procura: 50 km</Text>
+					<Text className="text-xl ">Notificações sobre respostas: Ligado</Text>
+					<Text className="text-xl">Modo anônimo: Desligado</Text>
 				</View>
-
-				<View className="items-center pt-2">
-					<TouchableOpacity
-						accessibilityRole="button"
-						onPress={handleSignOut}
-						className="flex-row items-center gap-2 py-3 px-6 rounded-xl bg-red-50 border border-red-200"
-					>
-						<LogOut size={20} color="#EF5350" />
-						<Text className="text-red-500 font-bold text-base">
-							Sair da Conta
-						</Text>
+				<View className="flex items-center pt-4">
+					<TouchableOpacity onPress={handleSignOut}>
+						<Text className="text-red text-center text-lg">Sair da conta</Text>
 					</TouchableOpacity>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</View>
 	);
 }
