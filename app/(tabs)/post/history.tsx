@@ -21,7 +21,7 @@ export default function History() {
 			{/* Header Fixo no Topo com Safe Area */}
 			<View
 				style={{ paddingTop: topPadding }}
-				className="px-4 pb-4 flex-row items-center justify-between bg-white border-b border-gray-100 shadow-sm z-10"
+				className="px-4 pb-4 flex-row items-center justify-between bg-white z-10"
 			>
 				<TouchableOpacity
 					className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-gray-100"
