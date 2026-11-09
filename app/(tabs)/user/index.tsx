@@ -1,20 +1,27 @@
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { UserAvatarButton as Perfil, useSessionStore } from "@/entities/user";
+import {
+	LogoutModal,
+	UserAvatarButton as Perfil,
+	useSessionStore,
+} from "@/entities/user";
 
 export default function User() {
 	const router = useRouter();
 	const insets = useSafeAreaInsets();
 	const { user, clearSession } = useSessionStore();
+	const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
 
 	const handleGoBack = () => {
 		router.back();
 	};
 
-	const handleSignOut = async () => {
+	const handleConfirmLogout = async () => {
+		setIsLogoutModalVisible(false);
 		await clearSession();
 		router.replace("/(auth)/login" as any);
 	};
@@ -36,7 +43,11 @@ export default function User() {
 				</TouchableOpacity>
 			</View>
 
-			<ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				className="flex-1"
+				contentContainerStyle={{ flexGrow: 1 }}
+			>
 				{/* Avatar e Estatística Centralizados */}
 				<View className="items-center pb-6">
 					<Perfil size={110} />
@@ -87,54 +98,67 @@ export default function User() {
 
 				{/* Card Branco de Preferências sobreposto ao azul (-mt-8) */}
 				<View
-					className="bg-white rounded-t-[32px] -mt-8 pt-8 px-6 shadow-sm"
+					className="flex-1 bg-white rounded-t-[32px] -mt-8 pt-8 px-6 justify-between"
 					style={{ paddingBottom: bottomPadding }}
 				>
-					<Text className="font-ubuntu-bold text-2xl text-gray-900 mb-6">
-						Preferências
-					</Text>
+					<View>
+						<Text className="font-ubuntu-bold text-2xl text-gray-900 mb-6">
+							Preferências
+						</Text>
 
-					<View className="gap-5">
-						<View className="flex-row items-center justify-between">
-							<Text className="font-ubuntu-bold text-base text-gray-900">
-								Distancia de procura:
-							</Text>
-							<Text className="font-ubuntu-regular text-base text-gray-700">
-								50 km
-							</Text>
-						</View>
+						<View className="gap-5">
+							<View className="flex-row items-center justify-between">
+								<Text className="font-ubuntu-bold text-base text-gray-900">
+									Distancia de procura:
+								</Text>
+								<Text className="font-ubuntu-regular text-base text-gray-700">
+									50 km
+								</Text>
+							</View>
 
-						<View className="flex-row items-center justify-between">
-							<Text className="font-ubuntu-bold text-base text-gray-900">
-								Notificações sobre respostas:
-							</Text>
-							<Text className="font-ubuntu-regular text-base text-gray-700">
-								Ligado
-							</Text>
-						</View>
+							<View className="flex-row items-center justify-between">
+								<Text className="font-ubuntu-bold text-base text-gray-900">
+									Notificações sobre respostas:
+								</Text>
+								<Text className="font-ubuntu-regular text-base text-gray-700">
+									Ligado
+								</Text>
+							</View>
 
-						<View className="flex-row items-center justify-between">
-							<Text className="font-ubuntu-bold text-base text-gray-900">
-								Modo anônimo:
-							</Text>
-							<Text className="font-ubuntu-regular text-base text-gray-700">
-								Desligado
-							</Text>
+							<View className="flex-row items-center justify-between">
+								<Text className="font-ubuntu-bold text-base text-gray-900">
+									Modo anônimo:
+								</Text>
+								<Text className="font-ubuntu-regular text-base text-gray-700">
+									Desligado
+								</Text>
+							</View>
 						</View>
 					</View>
 
-					{/* Botão Log out em vermelho */}
+					{/* Botão Sair em vermelho #EF5350 */}
 					<TouchableOpacity
-						onPress={handleSignOut}
+						onPress={() => setIsLogoutModalVisible(true)}
 						activeOpacity={0.7}
 						className="mt-12 py-2 items-center justify-center"
+						accessibilityRole="button"
+						accessibilityLabel="Sair da conta"
 					>
-						<Text className="font-ubuntu-medium text-red-500 text-base text-center">
-							Log out
+						<Text
+							style={{ color: "#EF5350" }}
+							className="font-ubuntu-medium text-base text-center"
+						>
+							Sair
 						</Text>
 					</TouchableOpacity>
 				</View>
 			</ScrollView>
+
+			<LogoutModal
+				isVisible={isLogoutModalVisible}
+				onConfirm={handleConfirmLogout}
+				onCancel={() => setIsLogoutModalVisible(false)}
+			/>
 
 			<StatusBar style="dark" />
 		</View>
