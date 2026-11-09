@@ -1,9 +1,14 @@
-import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import type { BottomTabBarProps } from "expo-router/tabs";
+import type { BottomTabBarProps as RNBottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { BlurView } from "expo-blur";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { triggerSelectionHaptic } from "@/shared/lib";
+
+export type BottomNavigationProps = BottomTabBarProps & {
+	navigation?: RNBottomTabBarProps["navigation"];
+};
 
 interface TabItemConfig {
 	routeIndex: number;
@@ -27,20 +32,42 @@ export function BottomNavigation({
 	state,
 	descriptors,
 	navigation,
-}: BottomTabBarProps) {
+	emitter,
+	navigateToTab,
+}: BottomNavigationProps) {
 	const insets = useSafeAreaInsets();
 	const activeIndex = state.index;
 
-	const handlePress = (routeName: string, isFocused: boolean) => {
-		const event = navigation.emit({
-			type: "tabPress",
-			target: routeName,
-			canPreventDefault: true,
-		});
+	const handlePress = (
+		routeKey: string,
+		routeName: string,
+		isFocused: boolean,
+	) => {
+		if (emitter && navigateToTab) {
+			const event = emitter.emit({
+				type: "tabPress",
+				target: routeKey,
+				canPreventDefault: true,
+			});
 
-		if (!isFocused && !event.defaultPrevented) {
-			triggerSelectionHaptic();
-			navigation.navigate(routeName, { merge: true });
+			if (!isFocused && !event.defaultPrevented) {
+				triggerSelectionHaptic();
+				navigateToTab(routeKey);
+			}
+			return;
+		}
+
+		if (navigation) {
+			const event = navigation.emit({
+				type: "tabPress",
+				target: routeName,
+				canPreventDefault: true,
+			});
+
+			if (!isFocused && !event.defaultPrevented) {
+				triggerSelectionHaptic();
+				navigation.navigate(routeName, { merge: true });
+			}
 		}
 	};
 
@@ -78,7 +105,7 @@ export function BottomNavigation({
 									borderless: false,
 									radius: 28,
 								}}
-								onPress={() => handlePress(route.name, isFocused)}
+								onPress={() => handlePress(route.key, route.name, isFocused)}
 								style={({ pressed }) => [
 									styles.tabButton,
 									isFocused &&
