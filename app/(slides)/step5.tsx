@@ -1,27 +1,46 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ShareLocation from "../../assets/shareLocation.png";
 import "@/shared/theme/global.css";
 import { AppButton as Button, PaginationIndicator } from "@/shared/ui";
 
-export default function Step4() {
+export default function Step5() {
+	const insets = useSafeAreaInsets();
+	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 16 : 24;
+
 	return (
-		<View className="flex-1 flex flex-col px-8 pb-8 bg-white pt-24 justify-between">
-			<Text className="text-blue-400 text-4xl font-bold">
-				{"Compartilhe sua\nlocalização e ajude"}
-			</Text>
-			<View className="w-full items-center">
-				<Image source={ShareLocation} />
-			</View>
-			<View className="flex flex-col items-center justify-center gap-6">
-				<Button text="Próximo" href="/initial" />
-				<PaginationIndicator position={4} />
-				<Link className="w-18 text-center" href="/initial">
-					Pular tour
-				</Link>
-			</View>
-			<StatusBar style="auto" />
+		<View className="flex-1 bg-white">
+			<ScrollView
+				contentContainerStyle={{
+					flexGrow: 1,
+					justifyContent: "space-between",
+					paddingTop: topPadding,
+					paddingBottom: bottomPadding,
+					paddingHorizontal: 16,
+				}}
+				showsVerticalScrollIndicator={false}
+			>
+				<Text className="font-ubuntu-bold text-[#42A5F5] text-3xl tracking-tight">
+					{"Compartilhe sua localização e ajude."}
+				</Text>
+				<View className="w-full items-center py-6">
+					<Image source={ShareLocation} resizeMode="contain" />
+				</View>
+				<View className="flex-col items-center justify-center gap-4">
+					<Button text="Próximo" href="/initial" />
+					<PaginationIndicator position={4} />
+					<Link
+						className="font-ubuntu-medium text-center text-gray-500 py-2 active:opacity-70"
+						href="/initial"
+					>
+						Pular tour
+					</Link>
+				</View>
+			</ScrollView>
+			<StatusBar style="dark" />
 		</View>
 	);
 }
