@@ -32,7 +32,7 @@ export default function ResultSearch() {
 			{/* Header Fixo no Topo com Safe Area */}
 			<View
 				style={{ paddingTop: topPadding }}
-				className="px-4 pb-3 bg-white border-b border-gray-100 shadow-sm z-10"
+				className="px-4 pb-3 bg-white z-10"
 			>
 				<View className="flex-row items-center gap-2">
 					<TouchableOpacity
