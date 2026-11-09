@@ -27,7 +27,7 @@ export function PetAvatarItem({
 			onPress();
 		} else {
 			router.push({
-				pathname: "/search/animalSelect" as any,
+				pathname: "/(tabs)/search/animalSelect" as any,
 				params: { query: "home" },
 			});
 		}
