@@ -283,7 +283,7 @@ export function RescueDetailsForm({
 				<AppButton
 					title="Publicar Alerta de Resgate"
 					loading={isSubmitting}
-					onPress={handleSubmit(onSubmit)}
+					onPress={() => handleSubmit(onSubmit)()}
 				/>
 				{onCancel ? (
 					<AppButton title="Cancelar" variant="outline" onPress={onCancel} />
