@@ -20,103 +20,120 @@ export default function User() {
 	};
 
 	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
-	const bottomPadding = insets.bottom > 0 ? insets.bottom + 20 : 28;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 20 : 32;
 
 	return (
 		<View className="flex-1 bg-white">
-			{/* Header Fixo no Topo com Safe Area */}
-			<View
-				style={{ paddingTop: topPadding }}
-				className="px-4 pb-4 flex-row items-center justify-between bg-white border-b border-gray-100 shadow-sm z-10"
-			>
+			{/* Top Bar apenas com botão voltar (sem título conforme design) */}
+			<View style={{ paddingTop: topPadding }} className="px-4 pb-2 bg-white">
 				<TouchableOpacity
 					className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-gray-100"
 					onPress={handleGoBack}
 					accessibilityRole="button"
 					accessibilityLabel="Voltar"
 				>
-					<MaterialIcons name="arrow-back" size={26} color="#1F2937" />
+					<MaterialIcons name="arrow-back" size={26} color="#000000" />
 				</TouchableOpacity>
-				<Text className="font-ubuntu-bold text-2xl text-gray-900 text-center flex-1">
-					Meu Perfil
-				</Text>
-				<View className="w-10" />
 			</View>
 
-			{/* Conteúdo Rolável sob o Header Fixo */}
-			<ScrollView
-				contentContainerStyle={{
-					paddingHorizontal: 16,
-					paddingTop: 16,
-					paddingBottom: bottomPadding,
-				}}
-				showsVerticalScrollIndicator={false}
-			>
-				{/* Avatar e Estatística */}
+			<ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+				{/* Avatar e Estatística Centralizados */}
 				<View className="items-center pb-6">
-					<Perfil size={120} />
-					<Text className="font-ubuntu-bold text-2xl text-gray-900 mt-3">
-						{user?.name || "Anna Faustino"}
+					<Perfil size={110} />
+					<Text className="font-ubuntu-bold text-2xl text-gray-900 mt-3 mb-2">
+						{user?.name || "Anna"}
 					</Text>
-					<View className="flex-row items-center gap-2 mt-2 bg-[#42A5F5]/10 px-4 py-1.5 rounded-full">
-						<Text className="font-ubuntu-bold text-base text-[#42A5F5]">
-							15
-						</Text>
-						<Text className="font-ubuntu-medium text-sm text-[#0D47A1]">
+
+					{/* Badge Circular de Assistências */}
+					<View className="items-center">
+						<View className="w-14 h-14 rounded-full bg-[#42A5F5] items-center justify-center shadow-sm">
+							<Text className="font-ubuntu-bold text-2xl text-white">15</Text>
+						</View>
+						<Text className="font-ubuntu-regular text-sm text-gray-800 mt-1">
 							Assistências
 						</Text>
 					</View>
 				</View>
 
-				{/* Card de Dados Pessoais */}
-				<View className="bg-[#42A5F5] p-5 rounded-2xl mb-4 shadow-sm">
-					<Text className="font-ubuntu-bold text-lg text-white mb-3">
-						Informações Pessoais
-					</Text>
-					<View className="gap-2">
-						<Text className="font-ubuntu-regular text-sm text-white/90">
-							Nome: {user?.name || "Anna Faustino"}
+				{/* Card Azul de Informações com bordas arredondadas superiores */}
+				<View className="bg-[#42A5F5] rounded-t-[32px] pt-8 pb-14 px-6">
+					<View className="gap-3">
+						<Text className="font-ubuntu-bold text-base text-white">
+							Nome:{" "}
+							<Text className="font-ubuntu-regular text-white/95">
+								{user?.name ? `${user.name} Faustino` : "Anna Faustino"}
+							</Text>
 						</Text>
-						<Text className="font-ubuntu-regular text-sm text-white/90">
-							Email: {user?.email || "annabanana@gmail.com"}
+						<Text className="font-ubuntu-bold text-base text-white">
+							Email:{" "}
+							<Text className="font-ubuntu-regular text-white/95">
+								{user?.email || "Annabanana@gmail.com"}
+							</Text>
 						</Text>
-						<Text className="font-ubuntu-regular text-sm text-white/90">
-							Telefone: (11) 1234-5678
+						<Text className="font-ubuntu-bold text-base text-white">
+							Número:{" "}
+							<Text className="font-ubuntu-regular text-white/95">
+								(11) 1234-5678
+							</Text>
 						</Text>
-						<Text className="font-ubuntu-regular text-sm text-white/90">
-							CPF: **** **** ***-02
+						<Text className="font-ubuntu-bold text-base text-white">
+							CPF:{" "}
+							<Text className="font-ubuntu-regular text-white/95">
+								**** **** ***-02
+							</Text>
 						</Text>
 					</View>
 				</View>
 
-				{/* Card de Preferências */}
-				<View className="bg-gray-50 border border-gray-200 p-5 rounded-2xl mb-6">
-					<Text className="font-ubuntu-bold text-lg text-gray-900 mb-3">
+				{/* Card Branco de Preferências sobreposto ao azul (-mt-8) */}
+				<View
+					className="bg-white rounded-t-[32px] -mt-8 pt-8 px-6 shadow-sm"
+					style={{ paddingBottom: bottomPadding }}
+				>
+					<Text className="font-ubuntu-bold text-2xl text-gray-900 mb-6">
 						Preferências
 					</Text>
-					<View className="gap-2">
-						<Text className="font-ubuntu-regular text-sm text-gray-700">
-							Distância de procura: 50 km
-						</Text>
-						<Text className="font-ubuntu-regular text-sm text-gray-700">
-							Notificações sobre respostas: Ligado
-						</Text>
-						<Text className="font-ubuntu-regular text-sm text-gray-700">
-							Modo anônimo: Desligado
-						</Text>
-					</View>
-				</View>
 
-				{/* Botão Sair da Conta */}
-				<TouchableOpacity
-					onPress={handleSignOut}
-					activeOpacity={0.7}
-					className="py-3 items-center justify-center rounded-xl border border-red-200 bg-red-50"
-				>
-					<Text className="font-ubuntu-bold text-red-600 text-base">
-						Sair da conta
-					</Text>
-				</TouchableOpacity>
+					<View className="gap-5">
+						<View className="flex-row items-center justify-between">
+							<Text className="font-ubuntu-bold text-base text-gray-900">
+								Distancia de procura:
+							</Text>
+							<Text className="font-ubuntu-regular text-base text-gray-700">
+								50 km
+							</Text>
+						</View>
+
+						<View className="flex-row items-center justify-between">
+							<Text className="font-ubuntu-bold text-base text-gray-900">
+								Notificações sobre respostas:
+							</Text>
+							<Text className="font-ubuntu-regular text-base text-gray-700">
+								Ligado
+							</Text>
+						</View>
+
+						<View className="flex-row items-center justify-between">
+							<Text className="font-ubuntu-bold text-base text-gray-900">
+								Modo anônimo:
+							</Text>
+							<Text className="font-ubuntu-regular text-base text-gray-700">
+								Desligado
+							</Text>
+						</View>
+					</View>
+
+					{/* Botão Log out em vermelho */}
+					<TouchableOpacity
+						onPress={handleSignOut}
+						activeOpacity={0.7}
+						className="mt-12 py-2 items-center justify-center"
+					>
+						<Text className="font-ubuntu-medium text-red-500 text-base text-center">
+							Log out
+						</Text>
+					</TouchableOpacity>
+				</View>
 			</ScrollView>
 
 			<StatusBar style="dark" />
