@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import {
+	TextInput,
+	type TextInputInstance,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import { Filter, Search, X } from "@/shared/icons";
 
 export interface SearchBarProps {
@@ -24,7 +29,7 @@ export function SearchBar({
 	className = "",
 }: SearchBarProps) {
 	const [text, setText] = useState(initialValue);
-	const inputRef = useRef<TextInput>(null);
+	const inputRef = useRef<TextInputInstance>(null);
 
 	// Debounce de busca
 	useEffect(() => {

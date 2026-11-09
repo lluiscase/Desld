@@ -1,6 +1,12 @@
 import { useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	Text,
+	TextInput,
+	type TextInputInstance,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export interface SearchInputProps {
@@ -26,7 +32,7 @@ export function SearchInput({
 	const isControlled = controlledValue !== undefined;
 	const text = isControlled ? controlledValue : internalText;
 
-	const inputRef = useRef<TextInput>(null);
+	const inputRef = useRef<TextInputInstance>(null);
 	const router = useRouter();
 
 	const handleChangeText = (val: string) => {
