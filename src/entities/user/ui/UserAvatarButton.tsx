@@ -4,7 +4,7 @@ import {
 	type ImageSourcePropType,
 	TouchableOpacity,
 } from "react-native";
-import UserImage from "../../../assets/User.png";
+import UserImage from "../../../../assets/User.png";
 
 export interface UserAvatarButtonProps {
 	size?: number;
