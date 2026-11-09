@@ -1,5 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import { Link, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -48,11 +48,20 @@ export default function Situation() {
 			{/* Ações Inferiores com 16px lateral */}
 			<View className="px-4 pt-4">
 				<Button text="Próximo" href="/(tabs)/post/description" />
-				<Link
-					className="font-ubuntu-medium text-center pt-4 text-red text-base active:opacity-70"
-					href="/(tabs)/post"
-				>
-					Cancelar
+				<Link href="/(tabs)/post" asChild>
+					<TouchableOpacity
+						activeOpacity={0.7}
+						className="w-full items-center justify-center pt-4 pb-2"
+						accessibilityRole="button"
+						accessibilityLabel="Cancelar anúncio"
+					>
+						<Text
+							style={{ color: "#EF5350" }}
+							className="font-ubuntu-medium text-base text-center"
+						>
+							Cancelar
+						</Text>
+					</TouchableOpacity>
 				</Link>
 			</View>
 
