@@ -4,7 +4,7 @@
 		"slug": "AuHelp",
 		"version": "1.0.0",
 		"orientation": "portrait",
-		"icon": "./assets/icon.png",
+		"icon": "./assets/auhelpIcon.png",
 		"userInterfaceStyle": "light",
 		"newArchEnabled": true,
 		"scheme": "AuHelp",
@@ -19,7 +19,7 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
+				"foregroundImage": "./assets/auhelpIcon.png",
 				"backgroundColor": "#ffffff"
 			},
 			"edgeToEdgeEnabled": true,
@@ -27,7 +27,7 @@
 			"package": "com.auhelp.app"
 		},
 		"web": {
-			"favicon": "./assets/favicon.png",
+			"favicon": "./assets/auhelpIcon.png",
 			"bundler": "metro"
 		},
 		"plugins": ["expo-router", "expo-secure-store"],
