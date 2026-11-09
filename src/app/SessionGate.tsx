@@ -25,7 +25,7 @@ export function SessionGate({ children }: PropsWithChildren) {
 			}
 		} else {
 			if (!inPublicGroup) {
-				router.replace("/(slides)/step1");
+				router.replace("/(slides)");
 			}
 		}
 	}, [isAuthenticated, isLoading, segments, router, hasMounted]);
