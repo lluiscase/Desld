@@ -5,7 +5,7 @@ import {
 	Text,
 	TouchableOpacity,
 } from "react-native";
-import defaultDogImage from "../../../assets/Dog.png";
+import defaultDogImage from "../../../../assets/Dog.png";
 
 export interface PetAvatarItemProps {
 	name: string;

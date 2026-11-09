@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import defaultDogImage from "../../../assets/Dog.png";
+import defaultDogImage from "../../../../assets/Dog.png";
 
 export type PostSituation = "Perdido" | "Abandonado" | "Adocao";
 
