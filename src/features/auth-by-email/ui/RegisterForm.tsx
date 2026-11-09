@@ -118,7 +118,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 			<View className="w-full mt-8">
 				<AppButton
 					text="Criar conta"
-					onPress={handleSubmit(onSubmit)}
+					onPress={() => handleSubmit(onSubmit)()}
 					disabled={isSubmitting}
 				/>
 			</View>

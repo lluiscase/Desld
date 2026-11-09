@@ -105,7 +105,7 @@ export function LoginForm({
 			<View className="w-full mt-8">
 				<AppButton
 					text="Entrar"
-					onPress={handleSubmit(onSubmit)}
+					onPress={() => handleSubmit(onSubmit)()}
 					disabled={isSubmitting}
 				/>
 			</View>
