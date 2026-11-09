@@ -1,12 +1,10 @@
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useRef, useState } from "react";
 import {
 	type FlatList,
 	type NativeScrollEvent,
 	type NativeSyntheticEvent,
-	Pressable,
-	Text,
 	useWindowDimensions,
 	View,
 } from "react-native";
@@ -20,7 +18,7 @@ import {
 	triggerNotificationHaptic,
 	triggerSelectionHaptic,
 } from "@/shared/lib";
-import { AppButton } from "@/shared/ui";
+import { AppButton as Button } from "@/shared/ui";
 import { ONBOARDING_SLIDES } from "../model/slidesData";
 import type { OnboardingSlide } from "../model/types";
 import { AnimatedPagination } from "./AnimatedPagination";
@@ -80,11 +78,6 @@ export function OnboardingTour() {
 		}
 	}, [currentIndex, scrollToIndex, router]);
 
-	const handleSkip = useCallback(() => {
-		triggerImpactHaptic("light");
-		router.push("/initial");
-	}, [router]);
-
 	const handleDotPress = useCallback(
 		(index: number) => {
 			triggerImpactHaptic("light");
@@ -97,77 +90,61 @@ export function OnboardingTour() {
 
 	return (
 		<View className="flex-1 bg-white">
-			{/* Top Bar com Botão Pular alinhado à direita e Safe Area */}
-			<View
-				style={{ paddingTop: topPadding }}
-				className="px-6 flex-row justify-end items-center h-14"
-			>
-				{!isLastSlide ? (
-					<Pressable
-						onPress={handleSkip}
-						accessibilityRole="button"
-						accessibilityLabel="Pular tour de introdução"
-						hitSlop={{ top: 12, bottom: 12, left: 16, right: 16 }}
-						className="py-2 px-3 rounded-full active:opacity-60"
-					>
-						<Text className="font-ubuntu-medium text-gray-500 text-base">
-							Pular tour
-						</Text>
-					</Pressable>
-				) : (
-					<View className="h-9" />
-				)}
+			{/* Carrossel Horizontal Contínuo com Gestos */}
+			<View style={{ paddingTop: topPadding }} className="flex-1">
+				<Animated.FlatList
+					ref={flatListRef}
+					data={ONBOARDING_SLIDES}
+					keyExtractor={(item) => item.id}
+					renderItem={({ item }) => (
+						<OnboardingSlideItem item={item} width={windowWidth} />
+					)}
+					horizontal
+					pagingEnabled
+					showsHorizontalScrollIndicator={false}
+					bounces={false}
+					onScroll={scrollHandler}
+					scrollEventThrottle={16}
+					onMomentumScrollEnd={handleMomentumScrollEnd}
+					getItemLayout={(_, index) => ({
+						length: windowWidth,
+						offset: windowWidth * index,
+						index,
+					})}
+					onScrollToIndexFailed={(info) => {
+						flatListRef.current?.scrollToOffset({
+							offset: info.index * windowWidth,
+							animated: true,
+						});
+					}}
+					initialNumToRender={2}
+					maxToRenderPerBatch={2}
+					windowSize={3}
+					className="flex-1"
+				/>
 			</View>
 
-			{/* Carrossel Horizontal Contínuo com Gestos */}
-			<Animated.FlatList
-				ref={flatListRef}
-				data={ONBOARDING_SLIDES}
-				keyExtractor={(item) => item.id}
-				renderItem={({ item }) => (
-					<OnboardingSlideItem item={item} width={windowWidth} />
-				)}
-				horizontal
-				pagingEnabled
-				showsHorizontalScrollIndicator={false}
-				bounces={false}
-				onScroll={scrollHandler}
-				scrollEventThrottle={16}
-				onMomentumScrollEnd={handleMomentumScrollEnd}
-				getItemLayout={(_, index) => ({
-					length: windowWidth,
-					offset: windowWidth * index,
-					index,
-				})}
-				onScrollToIndexFailed={(info) => {
-					flatListRef.current?.scrollToOffset({
-						offset: info.index * windowWidth,
-						animated: true,
-					});
-				}}
-				initialNumToRender={2}
-				maxToRenderPerBatch={2}
-				windowSize={3}
-				className="flex-1"
-			/>
-
-			{/* Rodapé Fixo com Dots Interativos e Botão Dinâmico */}
+			{/* Estrutura de Rodapé IDÊNTICA ao layout original */}
 			<View
 				style={{ paddingBottom: bottomPadding }}
-				className="px-6 pt-4 flex-col items-center gap-6"
+				className="flex-col items-center justify-center gap-4 px-4"
 			>
+				<Button
+					text={isLastSlide ? "Começar" : "Próximo"}
+					onPress={handleNext}
+				/>
 				<AnimatedPagination
 					total={ONBOARDING_SLIDES.length}
 					scrollX={scrollX}
 					itemWidth={windowWidth}
 					onDotPress={handleDotPress}
 				/>
-
-				<AppButton
-					text={isLastSlide ? "Começar" : "Próximo"}
-					onPress={handleNext}
-					className="w-full"
-				/>
+				<Link
+					className="font-ubuntu-medium text-center text-gray-500 py-2 active:opacity-70"
+					href="/initial"
+				>
+					Pular tour
+				</Link>
 			</View>
 
 			<StatusBar style="dark" />

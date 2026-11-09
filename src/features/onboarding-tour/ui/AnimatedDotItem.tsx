@@ -46,8 +46,8 @@ export const AnimatedDotItem: React.FC<AnimatedDotItemProps> = ({
 			onPress={onPress}
 			accessibilityRole="button"
 			accessibilityLabel={`Ir para slide ${index + 1}`}
-			hitSlop={{ top: 16, bottom: 16, left: 8, right: 8 }}
-			className="h-10 justify-center items-center px-1"
+			hitSlop={{ top: 12, bottom: 12, left: 6, right: 6 }}
+			className="mx-1 justify-center items-center"
 		>
 			<Animated.View style={animatedDotStyle} className="h-2 rounded-full" />
 		</Pressable>
