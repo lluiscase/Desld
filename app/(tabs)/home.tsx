@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import "@/shared/theme/global.css";
 import { PetAvatarItem as Pets, usePetListQuery } from "@/entities/pet";
 import { UserAvatarButton as Perfil } from "@/entities/user";
@@ -7,6 +8,7 @@ import { TipCard as Dicas } from "@/shared/ui";
 import Banner from "../../assets/Banner.png";
 
 export default function Home() {
+	const insets = useSafeAreaInsets();
 	const { data: pets = [] } = usePetListQuery();
 
 	const lostPets = pets.filter((p) => p.status === "lost");
@@ -14,32 +16,56 @@ export default function Home() {
 		(p) => p.status === "street" || p.status === "rescued",
 	);
 
+	// Tab Bar (64px) + Offset Inferior Flutuante + Respiro de 24px (Múltiplos de 8)
+	const floatingBarOffset = insets.bottom > 0 ? insets.bottom + 8 : 20;
+	const scrollBottomPadding = 64 + floatingBarOffset + 24;
+
 	return (
-		<View className="flex-1 flex-col bg-white pt-24">
-			<View className="flex-row px-8 justify-between itmems-center mb-6">
-				<Text className="text-blue-400 text-4xl font-bold">AuHelp</Text>
-				<Perfil x={47} />
+		<View className="flex-1 flex-col bg-white">
+			{/* Header natural respeitando Safe Area (Dynamic Island / Notch) */}
+			<View
+				style={{ paddingTop: insets.top > 0 ? insets.top + 8 : 16 }}
+				className="flex-row px-4 justify-between items-center pb-4 bg-white"
+			>
+				<Text
+					style={{ color: "#42A5F5" }}
+					className="font-ubuntu-bold text-3xl tracking-tight"
+				>
+					AuHelp
+				</Text>
+				<Perfil size={40} />
 			</View>
-			<ScrollView showsHorizontalScrollIndicator={false}>
-				<Image
-					source={Banner}
-					style={{
-						width: "100%",
-						height: undefined,
-						aspectRatio: 376 / 177,
-						borderRadius: 5,
-						resizeMode: "contain",
-					}}
-				/>
-				<View className="w-[370px] h-px bg-blue-400 my-6 mx-8" />
-				<Text className="text-base font-semibold mb-6 px-8">
-					Perdidos recentimente
+
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ paddingBottom: scrollBottomPadding }}
+			>
+				{/* Banner com margem lateral de 16px e cantos arredondados de 16px */}
+				<View className="px-4 mb-6">
+					<Image
+						source={Banner}
+						style={{
+							width: "100%",
+							height: undefined,
+							aspectRatio: 376 / 177,
+							borderRadius: 16,
+							resizeMode: "cover",
+						}}
+					/>
+				</View>
+
+				{/* Divisor sutil e fluido */}
+				<View className="h-px bg-gray-200 mx-4 mb-6" />
+
+				{/* Seção 1: Perdidos recentemente */}
+				<Text className="font-ubuntu-bold text-lg text-gray-900 mb-4 px-4">
+					Perdidos recentemente
 				</Text>
 				<ScrollView
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
-					contentContainerClassName="flex-row gap-6 px-8"
-					className="flex-grow-0"
+					contentContainerStyle={{ paddingHorizontal: 16, gap: 16 }}
+					className="flex-grow-0 mb-6"
 				>
 					{lostPets.length > 0 ? (
 						lostPets.map((pet) => (
@@ -56,12 +82,16 @@ export default function Home() {
 						</>
 					)}
 				</ScrollView>
-				<Text className="text-base font-semibold my-6 px-8">Aprenda</Text>
+
+				{/* Seção 2: Aprenda */}
+				<Text className="font-ubuntu-bold text-lg text-gray-900 mb-4 px-4">
+					Aprenda
+				</Text>
 				<ScrollView
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
-					contentContainerClassName="flex-row gap-4 px-8"
-					className="flex-grow-0"
+					contentContainerStyle={{ paddingHorizontal: 16, gap: 16 }}
+					className="flex-grow-0 mb-6"
 				>
 					<Dicas />
 					<Dicas />
@@ -69,13 +99,15 @@ export default function Home() {
 					<Dicas />
 					<Dicas />
 				</ScrollView>
-				<Text className="text-base font-semibold my-6 px-8">
-					Animaizinhos em riscos
+
+				{/* Seção 3: Animaizinhos em risco */}
+				<Text className="font-ubuntu-bold text-lg text-gray-900 mb-4 px-4">
+					Animaizinhos em risco
 				</Text>
 				<ScrollView
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
-					contentContainerClassName="flex-row gap-6 px-8"
+					contentContainerStyle={{ paddingHorizontal: 16, gap: 16 }}
 					className="flex-grow-0"
 				>
 					{riskPets.length > 0 ? (
@@ -93,7 +125,8 @@ export default function Home() {
 						</>
 					)}
 				</ScrollView>
-				<StatusBar style="auto" />
+
+				<StatusBar style="dark" />
 			</ScrollView>
 		</View>
 	);
