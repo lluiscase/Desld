@@ -5,15 +5,20 @@ import type { OnboardingSlide } from "../model/types";
 export interface OnboardingSlideItemProps {
 	item: OnboardingSlide;
 	width: number;
+	height?: number;
 }
 
 export const OnboardingSlideItem: React.FC<OnboardingSlideItemProps> = ({
 	item,
 	width,
+	height,
 }) => {
+	const imageHeight = height ? Math.min(height - 150, 300) : 280;
+	const imageWidth = Math.min(width - 48, 340);
+
 	return (
 		<View
-			style={{ width, height: "100%" }}
+			style={{ width, height: height ?? "100%" }}
 			className="px-4 justify-between flex-1 pb-2"
 		>
 			{/* Título com destaque semântico */}
@@ -32,15 +37,14 @@ export const OnboardingSlideItem: React.FC<OnboardingSlideItemProps> = ({
 				</Text>
 			</View>
 
-			{/* Div que cobre a ilustração - aumentada e centralizada */}
+			{/* Div que cobre a ilustração - aumentada e perfeitamente centralizada */}
 			<View className="w-full flex-1 items-center justify-center py-2">
 				<Image
 					source={item.image}
 					resizeMode="contain"
 					style={{
-						width: "100%",
-						height: "90%",
-						maxHeight: 380,
+						width: imageWidth,
+						height: imageHeight,
 					}}
 				/>
 			</View>

@@ -5,16 +5,14 @@ import { AnimatedDotItem } from "./AnimatedDotItem";
 
 export interface AnimatedPaginationProps {
 	total: number;
-	scrollX: SharedValue<number>;
-	itemWidth: number;
+	progress: SharedValue<number>;
 	onDotPress: (index: number) => void;
 	className?: string;
 }
 
 export const AnimatedPagination: React.FC<AnimatedPaginationProps> = ({
 	total,
-	scrollX,
-	itemWidth,
+	progress,
 	onDotPress,
 	className = "",
 }) => {
@@ -36,8 +34,7 @@ export const AnimatedPagination: React.FC<AnimatedPaginationProps> = ({
 				<AnimatedDotItem
 					key={`onboarding-dot-${index}`}
 					index={index}
-					scrollX={scrollX}
-					itemWidth={itemWidth}
+					progress={progress}
 					onPress={() => onDotPress(index)}
 				/>
 			))}

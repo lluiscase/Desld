@@ -9,27 +9,26 @@ import Animated, {
 
 export interface AnimatedDotItemProps {
 	index: number;
-	scrollX: SharedValue<number>;
-	itemWidth: number;
+	progress: SharedValue<number>;
 	onPress: () => void;
 }
 
 export const AnimatedDotItem: React.FC<AnimatedDotItemProps> = ({
 	index,
-	scrollX,
-	itemWidth,
+	progress,
 	onPress,
 }) => {
 	const animatedDotStyle = useAnimatedStyle(() => {
-		const inputRange = [
-			(index - 1) * itemWidth,
-			index * itemWidth,
-			(index + 1) * itemWidth,
-		];
+		const inputRange = [index - 1, index, index + 1];
 
-		const width = interpolate(scrollX.value, inputRange, [10, 28, 10], "clamp");
+		const width = interpolate(
+			progress.value,
+			inputRange,
+			[10, 28, 10],
+			"clamp",
+		);
 
-		const backgroundColor = interpolateColor(scrollX.value, inputRange, [
+		const backgroundColor = interpolateColor(progress.value, inputRange, [
 			"#D1D5DB",
 			"#42A5F5",
 			"#D1D5DB",
