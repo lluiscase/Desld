@@ -14,3 +14,7 @@ export {
 	UserAvatarButton as Perfil,
 	type UserAvatarButtonProps,
 } from "./ui/UserAvatarButton";
+export {
+	LogoutModal,
+	type LogoutModalProps,
+} from "./ui/LogoutModal";
