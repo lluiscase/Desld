@@ -54,8 +54,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 	};
 
 	return (
-		<>
-			<View className="w-full">
+		<View className="w-full">
+			<View className="w-full gap-4">
 				<Controller
 					control={control}
 					name="name"
@@ -115,11 +115,13 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 				/>
 			</View>
 
-			<AppButton
-				text="Criar conta"
-				onPress={handleSubmit(onSubmit)}
-				disabled={isSubmitting}
-			/>
-		</>
+			<View className="w-full mt-8">
+				<AppButton
+					text="Criar conta"
+					onPress={handleSubmit(onSubmit)}
+					disabled={isSubmitting}
+				/>
+			</View>
+		</View>
 	);
 }

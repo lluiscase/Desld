@@ -53,8 +53,8 @@ export function LoginForm({
 	};
 
 	return (
-		<>
-			<View>
+		<View className="w-full">
+			<View className="w-full gap-4">
 				<Controller
 					control={control}
 					name="email"
@@ -86,25 +86,29 @@ export function LoginForm({
 				{onForgotPasswordPress ? (
 					<TouchableOpacity
 						onPress={onForgotPasswordPress}
-						className="mt-2 text-end"
+						className="self-end pt-1 active:opacity-70"
 					>
-						<Text className="text-blue-400 text-end">Esqueci a senha</Text>
+						<Text className="font-ubuntu-medium text-[#42A5F5] text-sm text-right">
+							Esqueci a senha
+						</Text>
 					</TouchableOpacity>
 				) : (
 					<Link
-						href={"/forgotPassword"}
-						className="mt-2 text-blue-400 text-end"
+						href={"/(auth)/forgotPassword"}
+						className="font-ubuntu-medium text-[#42A5F5] text-sm self-end pt-1 active:opacity-70"
 					>
 						Esqueci a senha
 					</Link>
 				)}
 			</View>
 
-			<AppButton
-				text="Entrar"
-				onPress={handleSubmit(onSubmit)}
-				disabled={isSubmitting}
-			/>
-		</>
+			<View className="w-full mt-8">
+				<AppButton
+					text="Entrar"
+					onPress={handleSubmit(onSubmit)}
+					disabled={isSubmitting}
+				/>
+			</View>
+		</View>
 	);
 }

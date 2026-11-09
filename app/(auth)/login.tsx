@@ -51,19 +51,18 @@ export default function Login() {
 
 			<ScrollView
 				contentContainerStyle={{
-					flexGrow: 1,
-					justifyContent: "space-between",
 					paddingHorizontal: 16,
+					paddingTop: 16,
 					paddingBottom: bottomPadding,
 				}}
 				showsVerticalScrollIndicator={false}
 				keyboardShouldPersistTaps="handled"
 			>
-				<View className="w-full items-center py-6">
+				<View className="w-full items-center mb-6">
 					<Image source={CatsWelcome} resizeMode="contain" />
 				</View>
 
-				<View className="pb-4">
+				<View className="w-full max-w-[420px] self-center pb-4">
 					<LoginForm
 						onSuccess={() => router.replace("/(tabs)/home")}
 						onForgotPasswordPress={() => router.push("/(auth)/forgotPassword")}

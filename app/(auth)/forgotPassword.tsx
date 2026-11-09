@@ -59,32 +59,32 @@ export default function ForgotPassword() {
 			<View className="flex-1 bg-white rounded-t-3xl overflow-hidden">
 				<ScrollView
 					contentContainerStyle={{
-						flexGrow: 1,
-						justifyContent: "space-between",
 						paddingHorizontal: 16,
-						paddingTop: 32,
+						paddingTop: 28,
 						paddingBottom: bottomPadding,
 					}}
 					showsVerticalScrollIndicator={false}
 					keyboardShouldPersistTaps="handled"
 				>
-					<View className="w-full items-center">
-						<Image source={Password} resizeMode="contain" />
-						<Text className="font-ubuntu-regular text-center text-lg text-gray-700 mt-6 leading-7">
-							{"Digite seu e-mail para\nreceber um link de redefinição."}
-						</Text>
-					</View>
+					<View className="w-full max-w-[420px] self-center">
+						<View className="w-full items-center mb-6">
+							<Image source={Password} resizeMode="contain" />
+							<Text className="font-ubuntu-regular text-center text-base text-gray-700 mt-4 leading-6">
+								{"Digite seu e-mail para\nreceber um link de redefinição."}
+							</Text>
+						</View>
 
-					<View className="w-full py-6">
-						<Input
-							inputType="email"
-							placeholder="Digite seu e-mail"
-							value={email}
-							onChangeText={setEmail}
-						/>
-					</View>
+						<View className="w-full mb-8">
+							<Input
+								inputType="email"
+								placeholder="Digite seu e-mail"
+								value={email}
+								onChangeText={setEmail}
+							/>
+						</View>
 
-					<Button text="Enviar" href="/(auth)/login" />
+						<Button text="Enviar" href="/(auth)/login" />
+					</View>
 				</ScrollView>
 			</View>
 

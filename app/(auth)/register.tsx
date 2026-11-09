@@ -52,20 +52,18 @@ export default function Register() {
 			<View className="flex-1 bg-white rounded-t-3xl overflow-hidden">
 				<ScrollView
 					contentContainerStyle={{
-						flexGrow: 1,
-						justifyContent: "space-between",
 						paddingHorizontal: 16,
-						paddingTop: 24,
+						paddingTop: 20,
 						paddingBottom: bottomPadding,
 					}}
 					showsVerticalScrollIndicator={false}
 					keyboardShouldPersistTaps="handled"
 				>
-					<View className="w-full items-center pb-6">
+					<View className="w-full items-center mb-4">
 						<Image source={CatsWelcome} resizeMode="contain" />
 					</View>
 
-					<View className="w-full pb-4">
+					<View className="w-full max-w-[420px] self-center pb-6">
 						<RegisterForm onSuccess={() => router.replace("/(tabs)/home")} />
 					</View>
 				</ScrollView>
