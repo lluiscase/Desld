@@ -1,4 +1,8 @@
 export const colors = {
+	brand: {
+		DEFAULT: "#42A5F5",
+		primary: "#42A5F5",
+	},
 	orange: "#FF5400",
 	red: "#EF5350",
 	yellow: "#FFEBA2",

@@ -1,3 +1,9 @@
+export const FontFamilyUbuntu = {
+	regular: "Ubuntu_400Regular",
+	medium: "Ubuntu_500Medium",
+	bold: "Ubuntu_700Bold",
+};
+
 export const FontFamilyRoboto = {
 	regular: "Roboto_400Regular",
 	medium: "Roboto_500Medium",
