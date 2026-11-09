@@ -28,35 +28,33 @@ const variantStyles: Record<
 	{ container: string; text: string; spinner: string }
 > = {
 	primary: {
-		container: "bg-blue-400 active:bg-blue-500",
-		text: "text-white font-bold text-lg",
+		container: "bg-[#42A5F5] active:opacity-90 shadow-sm",
+		text: "text-white font-ubuntu-bold text-lg",
 		spinner: "#FFFFFF",
 	},
 	secondary: {
 		container: "bg-gray-100 active:bg-gray-200 border border-gray-200",
-		text: "text-gray-800 font-semibold text-lg",
+		text: "text-gray-800 font-ubuntu-medium text-lg",
 		spinner: "#4A4A4A",
 	},
 	outline: {
-		container: "bg-transparent active:bg-blue-50 border border-blue-400",
-		text: "text-blue-400 font-bold text-lg",
+		container: "bg-transparent active:bg-blue-50 border border-[#42A5F5]",
+		text: "text-[#42A5F5] font-ubuntu-bold text-lg",
 		spinner: "#42A5F5",
 	},
 };
 
 const sizeStyles: Record<ButtonSize, { container: string; text: string }> = {
 	sm: {
-		container: "h-10 px-3 rounded",
+		container: "h-10 px-4 rounded-xl",
 		text: "text-sm",
 	},
 	md: {
-		container:
-			"p-4 w-full md:w-[376px] h-[56px] rounded items-center justify-center",
+		container: "w-full h-14 rounded-2xl items-center justify-center",
 		text: "text-lg",
 	},
 	lg: {
-		container:
-			"p-4 w-full md:w-[376px] h-[56px] rounded items-center justify-center",
+		container: "w-full h-14 rounded-2xl items-center justify-center",
 		text: "text-lg",
 	},
 };

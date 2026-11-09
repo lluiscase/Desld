@@ -56,9 +56,9 @@ export function SearchInput({
 	}, []);
 
 	return (
-		<View className={`w-full ${className}`}>
+		<View className={`${className}`}>
 			{showLabel ? (
-				<Text className="mb-2 text-xl font-semibold text-gray-800">
+				<Text className="mb-2 text-xl font-ubuntu-bold text-gray-800">
 					{showLabel}
 				</Text>
 			) : null}
@@ -66,11 +66,11 @@ export function SearchInput({
 			<TouchableOpacity
 				onPress={handlePress}
 				activeOpacity={0.8}
-				className="flex-row items-center bg-white px-4 w-full h-[47px] rounded-2xl border border-gray-500"
+				className="flex-row items-center bg-white px-4 w-full h-12 rounded-2xl border border-gray-300"
 			>
 				<TextInput
 					ref={inputRef}
-					className="flex-1 py-2 text-gray-900 focus:border-none focus:outline-none"
+					className="flex-1 py-2 font-ubuntu-regular text-base text-gray-900 focus:border-none focus:outline-none"
 					placeholder={placeholder}
 					placeholderTextColor="#A0A0A0"
 					value={text}
@@ -80,10 +80,10 @@ export function SearchInput({
 					onSubmitEditing={handleSearchSubmit}
 					returnKeyType="search"
 				/>
-				<MaterialIcons name="search" size={34} color="#767676" />
+				<MaterialIcons name="search" size={26} color="#767676" />
 				{filter ? (
-					<View className="border-l ml-1 pl-1 border-gray-400">
-						<MaterialIcons name="filter-list" size={34} color="#767676" />
+					<View className="border-l ml-2 pl-2 border-gray-300">
+						<MaterialIcons name="filter-list" size={26} color="#767676" />
 					</View>
 				) : null}
 			</TouchableOpacity>
