@@ -1,43 +1,43 @@
 {
-  "expo": {
-    "name": "AuHelp",
-    "slug": "AuHelp",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "scheme": "AuHelp",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.auhelp.app"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.auhelp.app"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "15cf9df4-e978-4289-89a4-52b147e6c155"
-      }
-    }
-  }
+	"expo": {
+		"name": "AuHelp",
+		"slug": "AuHelp",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/auhelpIcon.png",
+		"userInterfaceStyle": "light",
+		"newArchEnabled": true,
+		"scheme": "AuHelp",
+		"splash": {
+			"image": "./assets/splash-icon.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.auhelp.app"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/auhelpIcon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"edgeToEdgeEnabled": true,
+			"predictiveBackGestureEnabled": false,
+			"package": "com.auhelp.app"
+		},
+		"web": {
+			"favicon": "./assets/auhelpIcon.png",
+			"bundler": "metro"
+		},
+		"plugins": ["expo-router", "expo-secure-store"],
+		"extra": {
+			"router": {
+				"root": "app"
+			},
+			"eas": {
+				"projectId": "15cf9df4-e978-4289-89a4-52b147e6c155"
+			}
+		}
+	}
 }

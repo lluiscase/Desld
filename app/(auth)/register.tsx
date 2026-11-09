@@ -1,125 +1,75 @@
+import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
-import { useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+	Image,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { RegisterForm } from "@/features/auth-by-email";
 import CatsWelcome from "../../assets/catsWelcome.png";
-import Button from "../../src/components/Button";
-import Input from "../../src/components/Input";
-import { useAuth } from "../../src/context/authContext";
 
 export default function Register() {
 	const router = useRouter();
-	const { signUp } = useAuth();
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [passwordRerun, setPasswordRerun] = useState("");
-	const [errors, setErrors] = useState<{
-		name?: string;
-		email?: string;
-		password?: string;
-		passwordRerun?: string;
-	}>({});
-	const [loading, setLoading] = useState(false);
-
-	const handleRegister = async () => {
-		setErrors({});
-		let hasError = false;
-
-		if (!name) {
-			setErrors((prev) => ({ ...prev, name: "Nome é obrigatório" }));
-			hasError = true;
-		}
-
-		if (!email) {
-			setErrors((prev) => ({ ...prev, email: "Email é obrigatório" }));
-			hasError = true;
-		} else if (!/\S+@\S+\.\S+/.test(email)) {
-			setErrors((prev) => ({ ...prev, email: "Email inválido" }));
-			hasError = true;
-		}
-
-		if (!password) {
-			setErrors((prev) => ({ ...prev, password: "Senha é obrigatória" }));
-			hasError = true;
-		}
-
-		if (password !== passwordRerun) {
-			setErrors((prev) => ({
-				...prev,
-				passwordRerun: "As senhas não coincidem",
-			}));
-			hasError = true;
-		}
-
-		if (hasError) {
-			return;
-		}
-
-		setLoading(true);
-		try {
-			await signUp(name, email, password);
-		} catch (error) {
-			setErrors({
-				email: "Ocorreu um erro ao criar a conta.",
-			});
-		} finally {
-			setLoading(false);
-		}
-	};
+	const insets = useSafeAreaInsets();
 
 	const handleGoBack = () => {
 		router.back();
 	};
 
+	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 16 : 24;
+
 	return (
-		<View className="flex-1 flex flex-col bg-blue-400">
-			<View className="flex flex-col justify-end p-8 h-[174px]">
-				<View className="flex flex-row items-center">
-					<TouchableOpacity className="mr-3" onPress={handleGoBack}>
-						<MaterialIcons name={"arrow-back"} size={25} color="#fff" />
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : undefined}
+			className="flex-1 bg-[#42A5F5]"
+		>
+			{/* Topo Azul com Safe Area */}
+			<View
+				style={{ paddingTop: topPadding }}
+				className="px-4 pb-6"
+			>
+				<View className="flex-row items-center gap-2">
+					<TouchableOpacity
+						className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-white/10"
+						onPress={handleGoBack}
+						accessibilityRole="button"
+						accessibilityLabel="Voltar"
+					>
+						<MaterialIcons name="arrow-back" size={26} color="#FFFFFF" />
 					</TouchableOpacity>
-					<Text className="text-white text-4xl font-bold">Criar conta</Text>
+					<Text className="font-ubuntu-bold text-3xl text-white">Criar conta</Text>
 				</View>
 			</View>
-			<View className="flex-1 flex flex-col justify-between items-center bg-white p-8 rounded-t-3xl">
-				<Image source={CatsWelcome} />
-				<View className="w-full">
-					<Input
-						inputType="name"
-						showLabel
-						value={name}
-						onChangeText={setName}
-						error={errors.name}
-					/>
-					<Input
-						inputType="email"
-						showLabel
-						value={email}
-						onChangeText={setEmail}
-						error={errors.email}
-					/>
-					<Input
-						inputType="password"
-						showLabel
-						value={password}
-						onChangeText={setPassword}
-						error={errors.password}
-					/>
-					<Input
-						inputType="passwordRerun"
-						showLabel
-						value={passwordRerun}
-						onChangeText={setPasswordRerun}
-						error={errors.passwordRerun}
-					/>
-				</View>
-				<Button
-					text="Criar conta"
-					onPress={handleRegister}
-					disabled={loading}
-				/>
+
+			{/* Conteúdo Branco com ScrollView */}
+			<View className="flex-1 bg-white rounded-t-3xl overflow-hidden">
+				<ScrollView
+					contentContainerStyle={{
+						paddingHorizontal: 16,
+						paddingTop: 20,
+						paddingBottom: bottomPadding,
+					}}
+					showsVerticalScrollIndicator={false}
+					keyboardShouldPersistTaps="handled"
+				>
+					<View className="w-full items-center mb-4">
+						<Image source={CatsWelcome} resizeMode="contain" />
+					</View>
+
+					<View className="w-full max-w-[420px] self-center pb-6">
+						<RegisterForm onSuccess={() => router.replace("/(tabs)/home")} />
+					</View>
+				</ScrollView>
 			</View>
-		</View>
+
+			<StatusBar style="light" />
+		</KeyboardAvoidingView>
 	);
 }

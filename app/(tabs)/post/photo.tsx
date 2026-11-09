@@ -1,8 +1,7 @@
-import { useIsFocused } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import { useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	Alert,
 	Image,
@@ -12,7 +11,7 @@ import {
 	View,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Button from "../../../src/components/Button";
+import { AppButton as Button } from "@/shared/ui";
 
 export default function Photo() {
 	const [cameraPermission, requestCameraPermission] = useCameraPermissions();
@@ -23,7 +22,17 @@ export default function Photo() {
 	const [photoUri, setPhotoUri] = useState<string | null>(null);
 	const cameraRef = useRef<CameraView>(null);
 	const router = useRouter();
-	const isFocused = useIsFocused();
+
+	const [isFocused, setIsFocused] = useState(false);
+
+	useFocusEffect(
+		useCallback(() => {
+			setIsFocused(true);
+			return () => {
+				setIsFocused(false);
+			};
+		}, []),
+	);
 
 	useEffect(() => {
 		requestCameraPermission();
@@ -35,33 +44,19 @@ export default function Photo() {
 	}
 
 	const takePhoto = async () => {
-		// if (cameraRef.current) {
-		// 	const options = { quality: 0.7, base64: true, exif: false };
-		// 	const photo = await cameraRef.current.takePictureAsync(options);
-		// 	if (photo) {
-		// 		setPhotoUri(photo.uri);
-		// 		console.log("Foto tirada:", photo.uri);
-
-		// 		if (mediaLibraryPermission?.granted) {
-		// 			await MediaLibrary.saveToLibraryAsync(photo.uri);
-		// 			Alert.alert("Sucesso", "Foto salva na galeria!");
-		// 		}
-		// 	}
-		// }
 		router.push("/(tabs)/post/situation");
 	};
 
 	const openMediaLibrary = async () => {
 		if (mediaLibraryPermission?.granted) {
 			const result = await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.Images,
+				mediaTypes: ["images"],
 				allowsEditing: false,
 				quality: 1,
 			});
 
 			if (!result.canceled && result.assets && result.assets.length > 0) {
 				setPhotoUri(result.assets[0].uri);
-				console.log("Foto selecionada da galeria:", result.assets[0].uri);
 			}
 		} else {
 			Alert.alert(
@@ -83,7 +78,7 @@ export default function Photo() {
 		return (
 			<View className="flex-1 justify-center items-center px-8 bg-white pt-24 pb-10">
 				<Text>Acesso à câmera negado.</Text>
-				<Button text="Next" href="/(tabs)/post/typeAnimal" />
+				<Button text="Next" href="/(tabs)/post/situation" />
 			</View>
 		);
 	}
@@ -106,7 +101,7 @@ export default function Photo() {
 					<TouchableOpacity
 						onPress={() => {
 							Alert.alert("Confirmar Foto", "Prosseguir com esta foto?");
-							router.push("/(tabs)/post/typeAnimal");
+							router.push("/(tabs)/post/situation");
 						}}
 						className="p-3 rounded-full bg-blue-500"
 					>
@@ -124,7 +119,7 @@ export default function Photo() {
 					<CameraView
 						ref={cameraRef}
 						facing={facing}
-						style={StyleSheet.absoluteFillObject}
+						style={StyleSheet.absoluteFill}
 					/>
 					<View className="absolute top-0 w-full flex-row justify-between items-start px-4 pt-12">
 						<TouchableOpacity

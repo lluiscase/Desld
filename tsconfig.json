@@ -3,6 +3,35 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
-    "typeRoots": ["./node_modules/@types", "./src/types"]
-  }
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/app": [
+        "src/app/index.ts"
+      ],
+      "@/app/*": [
+        "src/app/*"
+      ],
+      "@/widgets/*": [
+        "src/widgets/*"
+      ],
+      "@/features/*": [
+        "src/features/*"
+      ],
+      "@/entities/*": [
+        "src/entities/*"
+      ],
+      "@/shared/*": [
+        "src/shared/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "declarations.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }

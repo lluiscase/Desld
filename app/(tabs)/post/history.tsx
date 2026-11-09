@@ -1,26 +1,59 @@
-import { router } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { useRouter } from "expo-router";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Post from "../../../src/components/Post";
+import { PetPostCard as Post } from "@/entities/pet";
 
 export default function History() {
+	const router = useRouter();
+	const insets = useSafeAreaInsets();
+
 	const handleGoBack = () => {
 		router.back();
 	};
 
+	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 16 : 24;
+
 	return (
-		<View className="flex-1 flex-col px-8 bg-white pt-24 pb-10">
-			<View className="flex flex-row items-center">
-				<TouchableOpacity className="mr-3" onPress={handleGoBack}>
-					<MaterialIcons name={"arrow-back"} size={25} color="#000" />
+		<View className="flex-1 bg-white">
+			{/* Header Fixo no Topo com Safe Area */}
+			<View
+				style={{ paddingTop: topPadding }}
+				className="px-4 pb-4 flex-row items-center justify-between bg-white z-10"
+			>
+				<TouchableOpacity
+					className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-gray-100"
+					onPress={handleGoBack}
+					accessibilityRole="button"
+					accessibilityLabel="Voltar"
+				>
+					<MaterialIcons name="arrow-back" size={26} color="#1F2937" />
 				</TouchableOpacity>
-				<Text className="text-4xl font-bold">Últimos Anúncios</Text>
+				<Text className="font-ubuntu-bold text-2xl text-gray-900 text-center flex-1">
+					Últimos Anúncios
+				</Text>
+				<View className="w-10" />
 			</View>
-			<View className="mt-6 gap-4">
-				<Post situation="Perdido" name="Rex" type="Cachorro" time={4} />
-				<Post situation="Abandonado" name="Rex" type="Gato" time={1} />
-				<Post situation="Adocao" name="" type="Coelho" time={3} />
-			</View>
+
+			{/* Lista Rolável sob o Header Fixo */}
+			<ScrollView
+				contentContainerStyle={{
+					paddingHorizontal: 16,
+					paddingTop: 16,
+					paddingBottom: bottomPadding,
+				}}
+				showsVerticalScrollIndicator={false}
+			>
+				<View className="gap-4">
+					<Post situation="Perdido" name="Rex" type="Cachorro" time={4} />
+					<Post situation="Abandonado" name="Rex" type="Gato" time={1} />
+					<Post situation="Adocao" name="" type="Coelho" time={3} />
+				</View>
+			</ScrollView>
+
+			<StatusBar style="dark" />
 		</View>
 	);
 }

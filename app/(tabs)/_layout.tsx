@@ -1,5 +1,5 @@
 import { Tabs, useSegments } from "expo-router";
-import Navigation from "../../src/components/Navigation";
+import { BottomNavigation as Navigation } from "@/widgets/BottomNavigation";
 
 export default function AppLayout() {
 	const segments = useSegments();
@@ -9,7 +9,7 @@ export default function AppLayout() {
 		"situation",
 		"description",
 		"preVisulation",
-    "user",
+		"user",
 	];
 	const lastSegment = segments[segments.length - 1];
 	const isPostScreen = screensToHide.includes(lastSegment);
@@ -39,7 +39,7 @@ export default function AppLayout() {
 					title: "Pesquisar",
 				}}
 			/>
-      <Tabs.Screen
+			<Tabs.Screen
 				name="user"
 				options={{
 					title: "User",
