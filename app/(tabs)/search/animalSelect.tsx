@@ -17,7 +17,7 @@ export default function AnimalSelect() {
 		if (query !== "home") {
 			router.back();
 		} else {
-			router.push({ pathname: "/home" as any });
+			router.push({ pathname: "/(tabs)/home" as any });
 		}
 	};
 

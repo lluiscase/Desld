@@ -45,7 +45,7 @@ export function SearchInput({
 
 		if (filter) {
 			router.push({
-				pathname: "/search/resultSearch" as any,
+				pathname: "/(tabs)/search/resultSearch" as any,
 				params: { query: text },
 			});
 		}

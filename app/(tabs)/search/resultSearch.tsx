@@ -17,7 +17,7 @@ export default function ResultSearch() {
 
 	const handlePetPress = (id: string) => {
 		router.push({
-			pathname: "/search/animalSelect" as any,
+			pathname: "/(tabs)/search/animalSelect" as any,
 			params: { id },
 		});
 	};
