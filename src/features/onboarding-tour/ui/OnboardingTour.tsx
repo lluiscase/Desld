@@ -29,6 +29,7 @@ export function OnboardingTour() {
 	const insets = useSafeAreaInsets();
 	const router = useRouter();
 	const flatListRef = useRef<FlatList<OnboardingSlide>>(null);
+	const isAnimatingRef = useRef(false);
 
 	const scrollX = useSharedValue(0);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,12 +39,15 @@ export function OnboardingTour() {
 
 	const scrollHandler = useAnimatedScrollHandler({
 		onScroll: (event) => {
-			scrollX.value = event.contentOffset.x;
+			if (!isAnimatingRef.current) {
+				scrollX.value = event.contentOffset.x;
+			}
 		},
 	});
 
 	const handleMomentumScrollEnd = useCallback(
 		(event: NativeSyntheticEvent<NativeScrollEvent>) => {
+			if (isAnimatingRef.current) return;
 			const newIndex = Math.round(
 				event.nativeEvent.contentOffset.x / windowWidth,
 			);
@@ -59,31 +63,81 @@ export function OnboardingTour() {
 		[windowWidth, currentIndex],
 	);
 
-	const scrollToIndex = useCallback((index: number) => {
-		if (index < 0 || index >= ONBOARDING_SLIDES.length) return;
-		setCurrentIndex(index);
-		flatListRef.current?.scrollToIndex({
-			index,
-			animated: true,
-		});
-	}, []);
+	/**
+	 * Animação suave e cronometrada (400ms) de transição entre slides ao clicar em 'Próximo' ou nos dots.
+	 * Utiliza interpolação cúbica in-out com requestAnimationFrame na UI para uma experiência fluida.
+	 */
+	const smoothScrollTo = useCallback(
+		(targetIndex: number, durationMs = 400) => {
+			if (
+				targetIndex < 0 ||
+				targetIndex >= ONBOARDING_SLIDES.length ||
+				isAnimatingRef.current
+			) {
+				return;
+			}
+
+			const startOffset = scrollX.value;
+			const targetOffset = targetIndex * windowWidth;
+			const distance = targetOffset - startOffset;
+
+			if (Math.abs(distance) < 1) {
+				setCurrentIndex(targetIndex);
+				return;
+			}
+
+			isAnimatingRef.current = true;
+			const startTime = Date.now();
+
+			const easeInOutCubic = (t: number) =>
+				t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+
+			const animateFrame = () => {
+				const elapsed = Date.now() - startTime;
+				const progress = Math.min(elapsed / durationMs, 1);
+				const eased = easeInOutCubic(progress);
+				const currentOffset = startOffset + distance * eased;
+
+				flatListRef.current?.scrollToOffset({
+					offset: currentOffset,
+					animated: false,
+				});
+				scrollX.value = currentOffset;
+
+				if (progress < 1) {
+					requestAnimationFrame(animateFrame);
+				} else {
+					flatListRef.current?.scrollToOffset({
+						offset: targetOffset,
+						animated: false,
+					});
+					scrollX.value = targetOffset;
+					setCurrentIndex(targetIndex);
+					isAnimatingRef.current = false;
+				}
+			};
+
+			requestAnimationFrame(animateFrame);
+		},
+		[windowWidth, scrollX],
+	);
 
 	const handleNext = useCallback(() => {
 		if (currentIndex < ONBOARDING_SLIDES.length - 1) {
 			triggerImpactHaptic("light");
-			scrollToIndex(currentIndex + 1);
+			smoothScrollTo(currentIndex + 1, 400);
 		} else {
 			triggerNotificationHaptic("success");
 			router.push("/initial");
 		}
-	}, [currentIndex, scrollToIndex, router]);
+	}, [currentIndex, smoothScrollTo, router]);
 
 	const handleDotPress = useCallback(
 		(index: number) => {
 			triggerImpactHaptic("light");
-			scrollToIndex(index);
+			smoothScrollTo(index, 400);
 		},
-		[scrollToIndex],
+		[smoothScrollTo],
 	);
 
 	const isLastSlide = currentIndex === ONBOARDING_SLIDES.length - 1;
@@ -113,22 +167,16 @@ export function OnboardingTour() {
 						offset: windowWidth * index,
 						index,
 					})}
-					onScrollToIndexFailed={(info) => {
-						flatListRef.current?.scrollToOffset({
-							offset: info.index * windowWidth,
-							animated: true,
-						});
-					}}
 					initialNumToRender={2}
 					maxToRenderPerBatch={2}
 					windowSize={3}
 				/>
 			</View>
 
-			{/* Estrutura de Rodapé IDÊNTICA ao layout original */}
+			{/* Rodapé com Botão, Indicadores e Pular Tour */}
 			<View
 				style={{ paddingBottom: bottomPadding }}
-				className="flex-col items-center justify-center gap-4 px-4"
+				className="flex-col items-center justify-center gap-3 px-4 pt-2"
 			>
 				<Button
 					text={isLastSlide ? "Começar" : "Próximo"}
@@ -141,7 +189,7 @@ export function OnboardingTour() {
 					onDotPress={handleDotPress}
 				/>
 				<Link
-					className="font-ubuntu-medium text-center text-gray-500 py-2 active:opacity-70"
+					className="font-ubuntu-medium text-center text-gray-500 py-1.5 active:opacity-70"
 					href="/initial"
 				>
 					Pular tour

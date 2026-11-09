@@ -14,26 +14,34 @@ export const OnboardingSlideItem: React.FC<OnboardingSlideItemProps> = ({
 	return (
 		<View
 			style={{ width, height: "100%" }}
-			className="px-4 justify-between flex-1"
+			className="px-4 justify-between flex-1 pb-2"
 		>
-			<Text className="font-ubuntu-bold text-[#42A5F5] text-3xl tracking-tight">
-				{item.titleHighlight ? (
-					<Text
-						className={`font-ubuntu-bold text-3xl ${
-							item.titleHighlight.colorClassName ?? "text-red-500"
-						}`}
-					>
-						{item.titleHighlight.text}
-					</Text>
-				) : null}
-				{item.title}
-			</Text>
+			{/* Título com destaque semântico */}
+			<View className="pt-2">
+				<Text className="font-ubuntu-bold text-[#42A5F5] text-3xl tracking-tight leading-9">
+					{item.titleHighlight ? (
+						<Text
+							className={`font-ubuntu-bold text-3xl ${
+								item.titleHighlight.colorClassName ?? "text-red-500"
+							}`}
+						>
+							{item.titleHighlight.text}
+						</Text>
+					) : null}
+					{item.title}
+				</Text>
+			</View>
 
-			<View className="w-full flex-1 items-center justify-center py-4">
+			{/* Div que cobre a ilustração - aumentada e centralizada */}
+			<View className="w-full flex-1 items-center justify-center py-2">
 				<Image
 					source={item.image}
 					resizeMode="contain"
-					className="max-h-[340px] w-full"
+					style={{
+						width: "100%",
+						height: "90%",
+						maxHeight: 380,
+					}}
 				/>
 			</View>
 		</View>
