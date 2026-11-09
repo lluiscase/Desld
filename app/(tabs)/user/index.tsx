@@ -14,7 +14,7 @@ export default function User() {
 
 	const handleSignOut = async () => {
 		await clearSession();
-		router.replace("/login" as any);
+		router.replace("/(auth)/login" as any);
 	};
 
 	return (
