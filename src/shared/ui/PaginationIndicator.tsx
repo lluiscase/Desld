@@ -17,12 +17,12 @@ export function PaginationIndicator({
 	}));
 
 	return (
-		<View className={`flex-row justify-center mt-6 ${className}`}>
+		<View className={`flex-row items-center justify-center ${className}`}>
 			{dots.map((dot) => (
 				<View
 					key={dot.id}
-					className={`w-3 h-3 rounded-full mx-1 ${
-						dot.isActive ? "bg-black" : "bg-gray-300"
+					className={`h-2 rounded-full mx-1 ${
+						dot.isActive ? "w-6 bg-[#42A5F5]" : "w-2 bg-gray-300"
 					}`}
 				/>
 			))}
