@@ -2,7 +2,7 @@ import { Link, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useRef, useState } from "react";
 import { useWindowDimensions, View } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
+import { Easing, useSharedValue } from "react-native-reanimated";
 import Carousel, {
 	type ICarouselInstance,
 } from "react-native-reanimated-carousel";
@@ -68,7 +68,14 @@ export function OnboardingTour() {
 					height={carouselHeight}
 					autoPlay={false}
 					data={ONBOARDING_SLIDES as unknown as OnboardingSlide[]}
-					scrollAnimationDuration={400}
+					scrollAnimationDuration={1800}
+					withAnimation={{
+						type: "timing",
+						config: {
+							duration: 1800,
+							easing: Easing.out(Easing.cubic),
+						},
+					}}
 					onProgressChange={progress}
 					onSnapToItem={handleSnapToItem}
 					renderItem={({ item }: { item: OnboardingSlide }) => (
