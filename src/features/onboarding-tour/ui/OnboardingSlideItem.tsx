@@ -12,7 +12,10 @@ export const OnboardingSlideItem: React.FC<OnboardingSlideItemProps> = ({
 	width,
 }) => {
 	return (
-		<View style={{ width }} className="flex-1 justify-between px-4">
+		<View
+			style={{ width, height: "100%" }}
+			className="px-4 justify-between flex-1"
+		>
 			<Text className="font-ubuntu-bold text-[#42A5F5] text-3xl tracking-tight">
 				{item.titleHighlight ? (
 					<Text
@@ -25,8 +28,13 @@ export const OnboardingSlideItem: React.FC<OnboardingSlideItemProps> = ({
 				) : null}
 				{item.title}
 			</Text>
-			<View className="w-full flex-1 items-center justify-center py-6">
-				<Image source={item.image} resizeMode="contain" />
+
+			<View className="w-full flex-1 items-center justify-center py-4">
+				<Image
+					source={item.image}
+					resizeMode="contain"
+					className="max-h-[340px] w-full"
+				/>
 			</View>
 		</View>
 	);

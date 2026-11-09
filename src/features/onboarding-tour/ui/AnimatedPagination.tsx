@@ -22,13 +22,19 @@ export const AnimatedPagination: React.FC<AnimatedPaginationProps> = ({
 
 	return (
 		<View
-			className={`flex-row items-center justify-center gap-1 ${className}`}
+			style={{
+				flexDirection: "row",
+				alignItems: "center",
+				justifyContent: "center",
+				minHeight: 24,
+			}}
+			className={className}
 			accessibilityRole="toolbar"
-			accessibilityLabel="Indicador de páginas do tour"
+			accessibilityLabel="Indicador de passos do tour"
 		>
 			{items.map((index) => (
 				<AnimatedDotItem
-					key={`dot-${index}`}
+					key={`onboarding-dot-${index}`}
 					index={index}
 					scrollX={scrollX}
 					itemWidth={itemWidth}

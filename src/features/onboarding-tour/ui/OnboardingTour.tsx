@@ -106,6 +106,8 @@ export function OnboardingTour() {
 					onScroll={scrollHandler}
 					scrollEventThrottle={16}
 					onMomentumScrollEnd={handleMomentumScrollEnd}
+					contentContainerStyle={{ flexGrow: 1, height: "100%" }}
+					style={{ flex: 1 }}
 					getItemLayout={(_, index) => ({
 						length: windowWidth,
 						offset: windowWidth * index,
@@ -120,7 +122,6 @@ export function OnboardingTour() {
 					initialNumToRender={2}
 					maxToRenderPerBatch={2}
 					windowSize={3}
-					className="flex-1"
 				/>
 			</View>
 

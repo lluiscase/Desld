@@ -27,12 +27,12 @@ export const AnimatedDotItem: React.FC<AnimatedDotItemProps> = ({
 			(index + 1) * itemWidth,
 		];
 
-		const width = interpolate(scrollX.value, inputRange, [8, 24, 8], "clamp");
+		const width = interpolate(scrollX.value, inputRange, [10, 28, 10], "clamp");
 
 		const backgroundColor = interpolateColor(scrollX.value, inputRange, [
-			"#D9D9D9",
+			"#D1D5DB",
 			"#42A5F5",
-			"#D9D9D9",
+			"#D1D5DB",
 		]);
 
 		return {
@@ -46,10 +46,23 @@ export const AnimatedDotItem: React.FC<AnimatedDotItemProps> = ({
 			onPress={onPress}
 			accessibilityRole="button"
 			accessibilityLabel={`Ir para slide ${index + 1}`}
-			hitSlop={{ top: 12, bottom: 12, left: 6, right: 6 }}
-			className="mx-1 justify-center items-center"
+			hitSlop={{ top: 16, bottom: 16, left: 8, right: 8 }}
+			style={{
+				paddingHorizontal: 4,
+				paddingVertical: 8,
+				justifyContent: "center",
+				alignItems: "center",
+			}}
 		>
-			<Animated.View style={animatedDotStyle} className="h-2 rounded-full" />
+			<Animated.View
+				style={[
+					{
+						height: 10,
+						borderRadius: 5,
+					},
+					animatedDotStyle,
+				]}
+			/>
 		</Pressable>
 	);
 };
