@@ -16,10 +16,9 @@ function AndroidComposeSwitch({
 	return (
 		<Host matchContents>
 			<ComposeSwitch
-				variant="switch"
 				value={value}
-				onValueChange={handleChange}
-				elementColors={{
+				onCheckedChange={handleChange}
+				colors={{
 					checkedTrackColor: activeColor,
 					checkedThumbColor: "#FFFFFF",
 					uncheckedTrackColor: "#E5E7EB",

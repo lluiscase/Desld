@@ -1,8 +1,9 @@
 import { forwardRef, useState } from "react";
 import {
-	type KeyboardType,
+	type KeyboardTypeOptions,
 	Text,
 	TextInput,
+	type TextInputInstance,
 	type TextInputProps,
 	TouchableOpacity,
 	View,
@@ -17,7 +18,7 @@ const INPUT_CONFIG: Record<
 	{
 		icon: string;
 		placeholder: string;
-		keyboardType: KeyboardType;
+		keyboardType: KeyboardTypeOptions;
 		label: string;
 	}
 > = {
@@ -60,7 +61,7 @@ export interface AppInputProps extends TextInputProps {
 	inputClassName?: string;
 }
 
-export const AppInput = forwardRef<TextInput, AppInputProps>(
+export const AppInput = forwardRef<TextInputInstance, AppInputProps>(
 	(
 		{
 			inputType,
