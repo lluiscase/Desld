@@ -3,6 +3,12 @@ export {
 	rescueReportSchema,
 } from "./model/rescueReportSchema";
 export {
+	calculateNextSelectedTags,
+	DEFAULT_RESCUE_TAGS,
+	MUTUALLY_EXCLUSIVE_TAG_GROUPS,
+	type TagItem,
+} from "./model/rescueTags";
+export {
 	AdConfirmationModal,
 	AdConfirmationModal as AdConfirmationModalTailwind,
 	type AdConfirmationModalProps,
@@ -25,9 +31,7 @@ export {
 	type SituationType,
 } from "./ui/RescueSituationCarousel";
 export {
-	DEFAULT_RESCUE_TAGS,
 	RescueTagSelector,
 	RescueTagSelector as TagSelector,
 	type RescueTagSelectorProps,
-	type TagItem,
 } from "./ui/RescueTagSelector";

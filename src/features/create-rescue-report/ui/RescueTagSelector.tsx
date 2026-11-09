@@ -1,27 +1,11 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-export interface TagItem {
-	id: string;
-	label: string;
-}
-
-export const DEFAULT_RESCUE_TAGS: TagItem[] = [
-	{ id: "castrado", label: "Castrado" },
-	{ id: "macho", label: "Macho" },
-	{ id: "femea", label: "Fêmea" },
-	{ id: "vacinado", label: "Vacinado" },
-	{ id: "2-5-anos", label: "2-5 anos" },
-	{ id: "0-2-anos", label: "0-2 anos" },
-	{ id: "5-10-anos", label: "5-10 anos" },
-	{ id: "10-mais-anos", label: "+10 anos" },
-	{ id: "coleira", label: "Coleira com identificação" },
-	{ id: "agressivo", label: "Agressivo" },
-	{ id: "machucado", label: "Machucado" },
-	{ id: "grande-porte", label: "Grande porte" },
-];
+import { Text, TouchableOpacity, View } from "react-native";
+import {
+	calculateNextSelectedTags,
+	DEFAULT_RESCUE_TAGS,
+	type TagItem,
+} from "../model/rescueTags";
 
 export interface RescueTagSelectorProps {
 	tags?: TagItem[];
@@ -41,9 +25,7 @@ export function RescueTagSelector({
 	const currentSelectedIds = isControlled ? controlledIds : internalSelectedIds;
 
 	const toggleItem = (item: TagItem) => {
-		const next = currentSelectedIds.includes(item.id)
-			? currentSelectedIds.filter((id) => id !== item.id)
-			: [...currentSelectedIds, item.id];
+		const next = calculateNextSelectedTags(currentSelectedIds, item.id);
 
 		if (!isControlled) {
 			setInternalSelectedIds(next);
@@ -84,6 +66,7 @@ export function RescueTagSelector({
 			accessibilityRole="button"
 			accessibilityState={{ selected }}
 			onPress={() => toggleItem(item)}
+			activeOpacity={0.7}
 			className={`m-1 rounded-full border border-gray-300 px-3 py-1.5 ${
 				selected ? "border-cyan-500 bg-cyan-100" : "bg-gray-100"
 			}`}
@@ -99,7 +82,7 @@ export function RescueTagSelector({
 	);
 
 	return (
-		<SafeAreaView className={`flex-1 bg-white ${className}`}>
+		<View className={`bg-white ${className}`}>
 			<View className="mb-4">
 				<View className="flex-row justify-between items-center mb-2">
 					<Text className="text-xl font-semibold text-gray-800">
@@ -132,19 +115,17 @@ export function RescueTagSelector({
 				</View>
 			</View>
 
-			<View className="flex-1">
+			<View>
 				<Text className="mb-2 text-xl font-semibold text-gray-800">
 					Disponíveis
 				</Text>
-				<ScrollView
-					contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
-				>
+				<View className="flex-row flex-wrap">
 					{availableItems.map((item) => (
 						<Tag key={item.id} item={item} />
 					))}
-				</ScrollView>
+				</View>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
 
