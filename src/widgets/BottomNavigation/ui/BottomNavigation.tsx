@@ -1,8 +1,27 @@
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { BlurView } from "expo-blur";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { triggerSelectionHaptic } from "@/shared/lib";
+
+interface TabItemConfig {
+	routeIndex: number;
+	fallbackLabel: string;
+	iconName: "home" | "add" | "search";
+	iconSize: number;
+}
+
+const TAB_ITEMS: TabItemConfig[] = [
+	{ routeIndex: 0, fallbackLabel: "Home", iconName: "home", iconSize: 28 },
+	{ routeIndex: 1, fallbackLabel: "Postar", iconName: "add", iconSize: 30 },
+	{
+		routeIndex: 2,
+		fallbackLabel: "Pesquisar",
+		iconName: "search",
+		iconSize: 28,
+	},
+];
 
 export function BottomNavigation({
 	state,
@@ -20,6 +39,7 @@ export function BottomNavigation({
 		});
 
 		if (!isFocused && !event.defaultPrevented) {
+			triggerSelectionHaptic();
 			navigation.navigate(routeName, { merge: true });
 		}
 	};
@@ -34,57 +54,47 @@ export function BottomNavigation({
 		>
 			<BlurView
 				intensity={80}
-				tint="light"
+				tint={Platform.OS === "ios" ? "systemChromeMaterialLight" : "light"}
 				style={styles.blurWrapper}
 			>
 				<View style={styles.tabBarContent}>
-					<TouchableOpacity
-						accessibilityRole="button"
-						accessibilityLabel={
-							descriptors[state.routes[0].name]?.options?.title || "Home"
+					{TAB_ITEMS.map((item) => {
+						const route = state.routes[item.routeIndex];
+						if (!route) {
+							return null;
 						}
-						activeOpacity={0.7}
-						onPress={() => handlePress(state.routes[0].name, activeIndex === 0)}
-						style={styles.tabButton}
-					>
-						<MaterialIcons
-							name="home"
-							size={28}
-							color={activeIndex === 0 ? "#42A5F5" : "#8E8E93"}
-						/>
-					</TouchableOpacity>
+						const isFocused = activeIndex === item.routeIndex;
+						const label =
+							descriptors[route.name]?.options?.title || item.fallbackLabel;
 
-					<TouchableOpacity
-						accessibilityRole="button"
-						accessibilityLabel={
-							descriptors[state.routes[1].name]?.options?.title || "Postar"
-						}
-						activeOpacity={0.7}
-						onPress={() => handlePress(state.routes[1].name, activeIndex === 1)}
-						style={styles.tabButton}
-					>
-						<MaterialIcons
-							name="add"
-							size={30}
-							color={activeIndex === 1 ? "#42A5F5" : "#8E8E93"}
-						/>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						accessibilityRole="button"
-						accessibilityLabel={
-							descriptors[state.routes[2].name]?.options?.title || "Pesquisar"
-						}
-						activeOpacity={0.7}
-						onPress={() => handlePress(state.routes[2].name, activeIndex === 2)}
-						style={styles.tabButton}
-					>
-						<MaterialIcons
-							name="search"
-							size={28}
-							color={activeIndex === 2 ? "#42A5F5" : "#8E8E93"}
-						/>
-					</TouchableOpacity>
+						return (
+							<Pressable
+								key={route.key}
+								accessibilityRole="tab"
+								accessibilityState={{ selected: isFocused }}
+								accessibilityLabel={label}
+								android_ripple={{
+									color: "rgba(66, 165, 245, 0.2)",
+									borderless: false,
+									radius: 28,
+								}}
+								onPress={() => handlePress(route.name, isFocused)}
+								style={({ pressed }) => [
+									styles.tabButton,
+									isFocused &&
+										Platform.OS === "android" &&
+										styles.androidActiveIndicator,
+									pressed && Platform.OS !== "android" && styles.iosPressed,
+								]}
+							>
+								<MaterialIcons
+									name={item.iconName}
+									size={item.iconSize}
+									color={isFocused ? "#42A5F5" : "#8E8E93"}
+								/>
+							</Pressable>
+						);
+					})}
 				</View>
 			</BlurView>
 		</View>
@@ -107,10 +117,10 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		borderWidth: 1,
 		borderColor: "rgba(255, 255, 255, 0.4)",
-		// No iOS o BlurView puro exibe a difusão nativa limpa
-		// No Android aplicamos um fallback sutil com baixa opacidade
+		// No iOS o BlurView com systemChromeMaterialLight exibe a difusão nativa HIG
+		// No Android aplicamos superfície elevada translúcida alinhada ao Material Design 3
 		...(Platform.OS === "android" && {
-			backgroundColor: "rgba(255, 255, 255, 0.85)",
+			backgroundColor: "rgba(255, 255, 255, 0.9)",
 		}),
 		shadowColor: "#000000",
 		shadowOffset: { width: 0, height: 8 },
@@ -126,11 +136,18 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 	tabButton: {
-		width: 48,
-		height: 48,
+		width: 56,
+		height: 44,
 		justifyContent: "center",
 		alignItems: "center",
-		borderRadius: 24,
+		borderRadius: 22,
+		overflow: "hidden",
+	},
+	androidActiveIndicator: {
+		backgroundColor: "rgba(66, 165, 245, 0.14)",
+	},
+	iosPressed: {
+		opacity: 0.7,
 	},
 });
 

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -9,12 +9,16 @@ import {
 	UserAvatarButton as Perfil,
 	useSessionStore,
 } from "@/entities/user";
+import { triggerNotificationHaptic } from "@/shared/lib";
+import { AdaptiveSwitch } from "@/shared/ui";
 
 export default function User() {
 	const router = useRouter();
 	const insets = useSafeAreaInsets();
 	const { user, clearSession } = useSessionStore();
 	const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+	const [anonymousModeEnabled, setAnonymousModeEnabled] = useState(false);
 
 	const handleGoBack = () => {
 		router.back();
@@ -23,7 +27,7 @@ export default function User() {
 	const handleConfirmLogout = async () => {
 		setIsLogoutModalVisible(false);
 		await clearSession();
-		router.replace("/(auth)/login" as any);
+		router.replace("/(auth)/login");
 	};
 
 	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
@@ -117,28 +121,35 @@ export default function User() {
 							</View>
 
 							<View className="flex-row items-center justify-between">
-								<Text className="font-ubuntu-bold text-base text-gray-900">
+								<Text className="font-ubuntu-bold text-base text-gray-900 flex-1 mr-4">
 									Notificações sobre respostas:
 								</Text>
-								<Text className="font-ubuntu-regular text-base text-gray-700">
-									Ligado
-								</Text>
+								<AdaptiveSwitch
+									accessibilityLabel="Alternar notificações sobre respostas"
+									value={notificationsEnabled}
+									onValueChange={setNotificationsEnabled}
+								/>
 							</View>
 
 							<View className="flex-row items-center justify-between">
-								<Text className="font-ubuntu-bold text-base text-gray-900">
+								<Text className="font-ubuntu-bold text-base text-gray-900 flex-1 mr-4">
 									Modo anônimo:
 								</Text>
-								<Text className="font-ubuntu-regular text-base text-gray-700">
-									Desligado
-								</Text>
+								<AdaptiveSwitch
+									accessibilityLabel="Alternar modo anônimo"
+									value={anonymousModeEnabled}
+									onValueChange={setAnonymousModeEnabled}
+								/>
 							</View>
 						</View>
 					</View>
 
 					{/* Botão Sair em vermelho #EF5350 */}
 					<TouchableOpacity
-						onPress={() => setIsLogoutModalVisible(true)}
+						onPress={() => {
+							triggerNotificationHaptic("warning");
+							setIsLogoutModalVisible(true);
+						}}
 						activeOpacity={0.7}
 						className="mt-12 py-2 items-center justify-center"
 						accessibilityRole="button"
