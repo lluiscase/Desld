@@ -1,8 +1,7 @@
-import { useIsFocused } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
-import { useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	Alert,
 	Image,
@@ -23,7 +22,17 @@ export default function Photo() {
 	const [photoUri, setPhotoUri] = useState<string | null>(null);
 	const cameraRef = useRef<CameraView>(null);
 	const router = useRouter();
-	const isFocused = useIsFocused();
+
+	const [isFocused, setIsFocused] = useState(false);
+
+	useFocusEffect(
+		useCallback(() => {
+			setIsFocused(true);
+			return () => {
+				setIsFocused(false);
+			};
+		}, []),
+	);
 
 	useEffect(() => {
 		requestCameraPermission();
@@ -110,7 +119,7 @@ export default function Photo() {
 					<CameraView
 						ref={cameraRef}
 						facing={facing}
-						style={StyleSheet.absoluteFillObject}
+						style={StyleSheet.absoluteFill}
 					/>
 					<View className="absolute top-0 w-full flex-row justify-between items-start px-4 pt-12">
 						<TouchableOpacity

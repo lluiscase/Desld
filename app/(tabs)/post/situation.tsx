@@ -34,7 +34,7 @@ export default function Situation() {
 						<MaterialIcons name="arrow-back" size={26} color="#1F2937" />
 					</TouchableOpacity>
 					<Text className="font-ubuntu-bold text-2xl text-gray-900 text-center flex-1">
-						{"Selecione o tipo\nde anúncio"}
+						Tipo de anúncio
 					</Text>
 					<View className="w-10" />
 				</View>
