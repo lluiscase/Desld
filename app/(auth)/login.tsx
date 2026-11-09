@@ -1,33 +1,77 @@
+import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+	Image,
+	KeyboardAvoidingView,
+	Platform,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { LoginForm } from "@/features/auth-by-email";
 import CatsWelcome from "../../assets/catsWelcome.png";
 
 export default function Login() {
 	const router = useRouter();
+	const insets = useSafeAreaInsets();
 
 	const handleGoBack = () => {
 		router.back();
 	};
 
+	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 16 : 24;
+
 	return (
-		<View className="flex-1 flex flex-col px-8 pb-[125px] bg-white pt-24 justify-between">
-			<View className="flex flex-row items-center">
-				<TouchableOpacity className="mr-3" onPress={handleGoBack}>
-					<MaterialIcons name={"arrow-back"} size={25} color="#42A5F5" />
-				</TouchableOpacity>
-				<Text className="text-blue-400 text-4xl font-bold">
-					Bem vindo de volta
-				</Text>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : undefined}
+			className="flex-1 bg-white"
+		>
+			<View
+				style={{ paddingTop: topPadding }}
+				className="px-4 pb-2 bg-white"
+			>
+				<View className="flex-row items-center gap-2">
+					<TouchableOpacity
+						className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-gray-100"
+						onPress={handleGoBack}
+						accessibilityRole="button"
+						accessibilityLabel="Voltar"
+					>
+						<MaterialIcons name="arrow-back" size={26} color="#42A5F5" />
+					</TouchableOpacity>
+					<Text className="font-ubuntu-bold text-3xl text-[#42A5F5]">
+						Bem-vindo de volta
+					</Text>
+				</View>
 			</View>
-			<View className="w-full items-center">
-				<Image source={CatsWelcome} />
-			</View>
-			<LoginForm
-				onSuccess={() => router.replace("/(tabs)/home")}
-				onForgotPasswordPress={() => router.push("/(auth)/forgotPassword")}
-			/>
-		</View>
+
+			<ScrollView
+				contentContainerStyle={{
+					flexGrow: 1,
+					justifyContent: "space-between",
+					paddingHorizontal: 16,
+					paddingBottom: bottomPadding,
+				}}
+				showsVerticalScrollIndicator={false}
+				keyboardShouldPersistTaps="handled"
+			>
+				<View className="w-full items-center py-6">
+					<Image source={CatsWelcome} resizeMode="contain" />
+				</View>
+
+				<View className="pb-4">
+					<LoginForm
+						onSuccess={() => router.replace("/(tabs)/home")}
+						onForgotPasswordPress={() => router.push("/(auth)/forgotPassword")}
+					/>
+				</View>
+			</ScrollView>
+
+			<StatusBar style="dark" />
+		</KeyboardAvoidingView>
 	);
 }
