@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,11 +15,15 @@ export default function PhotoScreen() {
 
 	const { photoUri, isLoading, takePhoto, pickFromGallery, clearPhoto } =
 		useRescuePhotoPicker({
-			initialPhotoUri: params.initialPhotoUri,
+			initialPhotoUri: params?.initialPhotoUri,
 		});
 
 	const handleGoBack = () => {
 		router.back();
+	};
+
+	const handleCancel = () => {
+		router.navigate("/(tabs)/post");
 	};
 
 	const handleContinue = () => {
@@ -81,21 +85,20 @@ export default function PhotoScreen() {
 
 				{/* Ação de Cancelar no Rodapé */}
 				<View className="pt-6">
-					<Link href="/(tabs)/post" asChild>
-						<TouchableOpacity
-							activeOpacity={0.7}
-							className="w-full items-center justify-center pt-3 pb-2"
-							accessibilityRole="button"
-							accessibilityLabel="Cancelar anúncio"
+					<TouchableOpacity
+						activeOpacity={0.7}
+						onPress={handleCancel}
+						className="w-full items-center justify-center pt-3 pb-2"
+						accessibilityRole="button"
+						accessibilityLabel="Cancelar anúncio"
+					>
+						<Text
+							style={{ color: "#EF5350" }}
+							className="font-ubuntu-medium text-base text-center"
 						>
-							<Text
-								style={{ color: "#EF5350" }}
-								className="font-ubuntu-medium text-base text-center"
-							>
-								Cancelar
-							</Text>
-						</TouchableOpacity>
-					</Link>
+							Cancelar
+						</Text>
+					</TouchableOpacity>
 				</View>
 			</ScrollView>
 
