@@ -9,6 +9,13 @@ export {
 	type TagItem,
 } from "./model/rescueTags";
 export {
+	executeCameraCapture,
+	executeGalleryPick,
+	type UseRescuePhotoPickerOptions,
+	type UseRescuePhotoPickerReturn,
+	useRescuePhotoPicker,
+} from "./model/useRescuePhotoPicker";
+export {
 	AdConfirmationModal,
 	AdConfirmationModal as AdConfirmationModalTailwind,
 	type AdConfirmationModalProps,
@@ -22,6 +29,10 @@ export {
 	RescueDetailsForm,
 	type RescueDetailsFormProps,
 } from "./ui/RescueDetailsForm";
+export {
+	RescuePhotoCaptureCard,
+	type RescuePhotoCaptureCardProps,
+} from "./ui/RescuePhotoCaptureCard";
 export {
 	RESCUE_SITUATIONS,
 	RescueSituationCarousel,
