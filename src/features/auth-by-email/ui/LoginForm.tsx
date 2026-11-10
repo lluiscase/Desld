@@ -15,6 +15,7 @@ export interface LoginFormProps {
 export function LoginForm({
 	onSuccess,
 	onForgotPasswordPress,
+	onRegisterPress,
 }: LoginFormProps) {
 	const setSession = useSessionStore((state) => state.setSession);
 	const [serverError, setServerError] = useState<string | null>(null);
@@ -108,6 +109,26 @@ export function LoginForm({
 					onPress={() => handleSubmit(onSubmit)()}
 					disabled={isSubmitting}
 				/>
+
+				{onRegisterPress ? (
+					<TouchableOpacity
+						onPress={onRegisterPress}
+						className="self-center pt-4 active:opacity-70"
+						accessibilityRole="button"
+						accessibilityLabel="Registrar"
+					>
+						<Text className="font-ubuntu-medium text-[#42A5F5] text-sm text-center">
+							Registrar
+						</Text>
+					</TouchableOpacity>
+				) : (
+					<Link
+						href={"/(auth)/register"}
+						className="font-ubuntu-medium text-[#42A5F5] text-sm self-center pt-4 active:opacity-70 text-center"
+					>
+						Registrar
+					</Link>
+				)}
 			</View>
 		</View>
 	);
