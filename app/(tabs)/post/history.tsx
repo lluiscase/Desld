@@ -1,13 +1,14 @@
-import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { PetPostCard as Post } from "@/entities/pet";
+import { PetPostCard as Post, useUserPostsStore } from "@/entities/pet";
 
 export default function History() {
 	const router = useRouter();
 	const insets = useSafeAreaInsets();
+	const posts = useUserPostsStore((state) => state.posts);
 
 	const handleGoBack = () => {
 		router.back();
@@ -47,9 +48,16 @@ export default function History() {
 				showsVerticalScrollIndicator={false}
 			>
 				<View className="gap-4">
-					<Post situation="Perdido" name="Rex" type="Cachorro" time={4} />
-					<Post situation="Abandonado" name="Rex" type="Gato" time={1} />
-					<Post situation="Adocao" name="" type="Coelho" time={3} />
+					{posts.map((post) => (
+						<Post
+							key={post.id}
+							situation={post.situation}
+							name={post.name}
+							type={post.type}
+							time={post.time}
+							image={post.image}
+						/>
+					))}
 				</View>
 			</ScrollView>
 

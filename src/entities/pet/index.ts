@@ -12,6 +12,12 @@ export {
 	usePetListQuery,
 } from "./model/usePetListQuery";
 export {
+	DEFAULT_USER_POSTS,
+	type UserPostItem,
+	type UserPostsState,
+	useUserPostsStore,
+} from "./model/useUserPostsStore";
+export {
 	PetAvatarItem,
 	PetAvatarItem as Pets,
 	type PetAvatarItemProps,
