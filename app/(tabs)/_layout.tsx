@@ -16,6 +16,7 @@ export default function AppLayout() {
 
 	return (
 		<Tabs
+			backBehavior="initialRoute"
 			tabBar={(props) => (isPostScreen ? null : <Navigation {...props} />)}
 			screenOptions={{
 				headerShown: false,

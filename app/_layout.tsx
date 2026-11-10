@@ -9,7 +9,10 @@ export default function RootLayout() {
 				<Stack screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="(auth)" options={{ headerShown: false }} />
 					<Stack.Screen name="(slides)" options={{ headerShown: false }} />
-					<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+					<Stack.Screen
+						name="(tabs)"
+						options={{ headerShown: false, gestureEnabled: false }}
+					/>
 				</Stack>
 			</SessionGate>
 		</AppProviders>

@@ -1,6 +1,6 @@
 import { useRouter, useSegments } from "expo-router";
 import { type PropsWithChildren, useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, BackHandler, Text, View } from "react-native";
 import { useSessionStore } from "@/entities/user";
 
 export function SessionGate({ children }: PropsWithChildren) {
@@ -29,6 +29,38 @@ export function SessionGate({ children }: PropsWithChildren) {
 			}
 		}
 	}, [isAuthenticated, isLoading, segments, router, hasMounted]);
+
+	// Bloqueio do botão físico/gestual Voltar no Android para rotas públicas quando autenticado
+	useEffect(() => {
+		if (!isAuthenticated || isLoading || !hasMounted) return;
+
+		const backAction = () => {
+			const routeSegments = segments as string[];
+			const isInsideTabs = routeSegments[0] === "(tabs)";
+			const isAtHome =
+				isInsideTabs &&
+				(routeSegments[1] === "home" || routeSegments.length <= 1);
+
+			if (isAtHome) {
+				BackHandler.exitApp();
+				return true;
+			}
+
+			if (!isInsideTabs) {
+				router.replace("/(tabs)/home");
+				return true;
+			}
+
+			return false;
+		};
+
+		const subscription = BackHandler.addEventListener(
+			"hardwareBackPress",
+			backAction,
+		);
+
+		return () => subscription.remove();
+	}, [isAuthenticated, isLoading, hasMounted, segments, router]);
 
 	if (isLoading || !hasMounted) {
 		return (
