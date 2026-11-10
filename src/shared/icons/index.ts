@@ -21,6 +21,7 @@ export {
 	Mail,
 	MapPin,
 	Plus,
+	RotateCw,
 	Search,
 	Share2,
 	ShieldAlert,
