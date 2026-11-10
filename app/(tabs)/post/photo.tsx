@@ -1,164 +1,105 @@
-import { CameraView, useCameraPermissions } from "expo-camera";
-import * as ImagePicker from "expo-image-picker";
-import { useFocusEffect, useRouter } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-	Alert,
-	Image,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { AppButton as Button } from "@/shared/ui";
+import {
+	RescuePhotoCaptureCard,
+	useRescuePhotoPicker,
+} from "@/features/create-rescue-report";
 
-export default function Photo() {
-	const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-	const [mediaLibraryPermission, requestMediaLibraryPermission] =
-		ImagePicker.useMediaLibraryPermissions();
-
-	const [facing, setFacing] = useState<"front" | "back">("back");
-	const [photoUri, setPhotoUri] = useState<string | null>(null);
-	const cameraRef = useRef<CameraView>(null);
+export default function PhotoScreen() {
 	const router = useRouter();
+	const insets = useSafeAreaInsets();
+	const params = useLocalSearchParams<{ initialPhotoUri?: string }>();
 
-	const [isFocused, setIsFocused] = useState(false);
+	const { photoUri, isLoading, takePhoto, pickFromGallery, clearPhoto } =
+		useRescuePhotoPicker({
+			initialPhotoUri: params.initialPhotoUri,
+		});
 
-	useFocusEffect(
-		useCallback(() => {
-			setIsFocused(true);
-			return () => {
-				setIsFocused(false);
-			};
-		}, []),
-	);
-
-	useEffect(() => {
-		requestCameraPermission();
-		requestMediaLibraryPermission();
-	}, [requestCameraPermission, requestMediaLibraryPermission]);
-
-	function toggleFacing() {
-		setFacing((current) => (current === "back" ? "front" : "back"));
-	}
-
-	const takePhoto = async () => {
-		router.push("/(tabs)/post/situation");
+	const handleGoBack = () => {
+		router.back();
 	};
 
-	const openMediaLibrary = async () => {
-		if (mediaLibraryPermission?.granted) {
-			const result = await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ["images"],
-				allowsEditing: false,
-				quality: 1,
+	const handleContinue = () => {
+		if (photoUri) {
+			router.push({
+				pathname: "/(tabs)/post/situation",
+				params: { photoUri },
 			});
-
-			if (!result.canceled && result.assets && result.assets.length > 0) {
-				setPhotoUri(result.assets[0].uri);
-			}
 		} else {
-			Alert.alert(
-				"Permissão Negada",
-				"Não temos permissão para acessar sua galeria.",
-			);
+			router.push("/(tabs)/post/situation");
 		}
 	};
 
-	if (!cameraPermission || !mediaLibraryPermission) {
-		return (
-			<View className="flex-1 justify-center items-center bg-white">
-				<Text>Carregando permissões...</Text>
-			</View>
-		);
-	}
-
-	if (!cameraPermission.granted) {
-		return (
-			<View className="flex-1 justify-center items-center px-8 bg-white pt-24 pb-10">
-				<Text>Acesso à câmera negado.</Text>
-				<Button text="Next" href="/(tabs)/post/situation" />
-			</View>
-		);
-	}
-
-	if (photoUri) {
-		return (
-			<View className="flex-1 flex-col bg-white">
-				<Image
-					source={{ uri: photoUri }}
-					className="flex-1 w-full h-full"
-					resizeMode="cover"
-				/>
-				<View className="absolute bottom-0 w-full flex-row justify-around items-center p-4 bg-black/50">
-					<TouchableOpacity
-						onPress={() => setPhotoUri(null)}
-						className="p-3 rounded-full bg-gray-500"
-					>
-						<MaterialIcons name="close" size={30} color="white" />
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => {
-							Alert.alert("Confirmar Foto", "Prosseguir com esta foto?");
-							router.push("/(tabs)/post/situation");
-						}}
-						className="p-3 rounded-full bg-blue-500"
-					>
-						<MaterialIcons name="check" size={30} color="white" />
-					</TouchableOpacity>
-				</View>
-			</View>
-		);
-	}
+	const topPadding = insets.top > 0 ? insets.top + 8 : 16;
+	const bottomPadding = insets.bottom > 0 ? insets.bottom + 16 : 24;
 
 	return (
-		<View className="flex-1 bg-black">
-			{isFocused && (
-				<>
-					<CameraView
-						ref={cameraRef}
-						facing={facing}
-						style={StyleSheet.absoluteFill}
+		<View className="flex-1 bg-white">
+			<ScrollView
+				contentContainerStyle={{
+					flexGrow: 1,
+					justifyContent: "space-between",
+					paddingTop: topPadding,
+					paddingBottom: bottomPadding,
+					paddingHorizontal: 16,
+				}}
+				showsVerticalScrollIndicator={false}
+				keyboardShouldPersistTaps="handled"
+			>
+				{/* Topo e Header Simétrico */}
+				<View>
+					<View className="flex-row items-center justify-between pb-6">
+						<TouchableOpacity
+							className="w-10 h-10 items-center justify-center -ml-2 rounded-full active:bg-gray-100"
+							onPress={handleGoBack}
+							accessibilityRole="button"
+							accessibilityLabel="Voltar"
+						>
+							<MaterialIcons name="arrow-back" size={26} color="#1F2937" />
+						</TouchableOpacity>
+
+						<Text className="font-ubuntu-bold text-2xl text-gray-900 text-center flex-1">
+							Foto do animal
+						</Text>
+
+						<View className="w-10" />
+					</View>
+
+					{/* Card Central de Captura e Seleção de Foto */}
+					<RescuePhotoCaptureCard
+						photoUri={photoUri}
+						isLoading={isLoading}
+						onTakePhoto={takePhoto}
+						onPickFromGallery={pickFromGallery}
+						onClearPhoto={clearPhoto}
+						onContinue={handleContinue}
 					/>
-					<View className="absolute top-0 w-full flex-row justify-between items-start px-4 pt-12">
-						<TouchableOpacity
-							onPress={() => router.back()}
-							className="p-2 rounded-full bg-white/50"
-						>
-							<MaterialIcons name="arrow-back" size={28} color="black" />
-						</TouchableOpacity>
-						<TouchableOpacity
-							onPress={toggleFacing}
-							className="p-2 rounded-full bg-white/50 ml-auto"
-						>
-							<MaterialIcons
-								name="flip-camera-android"
-								size={28}
-								color="black"
-							/>
-						</TouchableOpacity>
-					</View>
+				</View>
 
-					<View className="absolute bottom-0 w-full flex-row justify-around items-center p-6">
+				{/* Ação de Cancelar no Rodapé */}
+				<View className="pt-6">
+					<Link href="/(tabs)/post" asChild>
 						<TouchableOpacity
-							onPress={openMediaLibrary}
-							className="p-4 rounded-full bg-gray-600"
+							activeOpacity={0.7}
+							className="w-full items-center justify-center pt-3 pb-2"
+							accessibilityRole="button"
+							accessibilityLabel="Cancelar anúncio"
 						>
-							<MaterialIcons name="photo-library" size={30} color="white" />
+							<Text
+								style={{ color: "#EF5350" }}
+								className="font-ubuntu-medium text-base text-center"
+							>
+								Cancelar
+							</Text>
 						</TouchableOpacity>
+					</Link>
+				</View>
+			</ScrollView>
 
-						<TouchableOpacity
-							onPress={takePhoto}
-							className="w-20 h-20 rounded-full border-4 border-white bg-white/30 justify-center items-center"
-						>
-							<View className="w-16 h-16 rounded-full bg-white" />
-						</TouchableOpacity>
-
-						<View className="w-16 h-16" />
-					</View>
-				</>
-			)}
+			<StatusBar style="dark" />
 		</View>
 	);
 }
