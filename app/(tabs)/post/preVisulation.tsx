@@ -1,10 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { usePetDetailsQuery } from "@/entities/pet";
+import { usePetDetailsQuery, useUserPostsStore } from "@/entities/pet";
 import { AdConfirmationModal as AdConfirmationModalTailwind } from "@/features/create-rescue-report";
 import {
 	AppButton as Button,
@@ -18,7 +18,11 @@ export default function PreVisulation() {
 	const { id } = useLocalSearchParams<{ id?: string }>();
 	const { data: pet } = usePetDetailsQuery(id);
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const NEXT_PAGE = "/(tabs)/post";
+	const NEXT_PAGE = "/(tabs)/post" as const;
+
+	const publishSimulatedPost = useUserPostsStore(
+		(state) => state.publishSimulatedPost,
+	);
 
 	const handleGoBack = () => {
 		router.back();
@@ -30,7 +34,17 @@ export default function PreVisulation() {
 
 	const handleModalContinue = () => {
 		setIsModalVisible(false);
-		router.push(NEXT_PAGE as any);
+		publishSimulatedPost({
+			name: petName,
+			type: petSpecies,
+			situation:
+				pet?.status === "street"
+					? "Abandonado"
+					: pet?.status === "rescued"
+						? "Adocao"
+						: "Perdido",
+		});
+		router.replace(NEXT_PAGE);
 	};
 
 	const handleModalClose = () => {

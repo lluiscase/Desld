@@ -31,10 +31,11 @@ export default function Post() {
 					</View>
 
 					<ScrollView
+						className="flex-1"
 						contentContainerStyle={{
 							paddingHorizontal: 16,
 							paddingTop: 8,
-							paddingBottom: tabClearance,
+							paddingBottom: 16,
 						}}
 						showsVerticalScrollIndicator={false}
 					>
@@ -50,11 +51,14 @@ export default function Post() {
 								/>
 							))}
 						</View>
-
-						<View className="pt-6">
-							<Button text="Divulgar" href="/(tabs)/post/photo" />
-						</View>
 					</ScrollView>
+
+					<View
+						style={{ paddingBottom: tabClearance }}
+						className="px-4 pt-2 bg-white"
+					>
+						<Button text="Divulgar" href="/(tabs)/post/photo" />
+					</View>
 				</View>
 			) : (
 				// Estado Vazio: Ilustração acolhedora centralizada + Texto explicativo + Botão principal "Divulgar"

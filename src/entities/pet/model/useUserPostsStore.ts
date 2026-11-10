@@ -41,13 +41,15 @@ export interface UserPostsState {
 	addPost: (
 		post: Omit<UserPostItem, "id" | "time"> & { time?: number; id?: string },
 	) => void;
+	publishSimulatedPost: (post?: Partial<UserPostItem>) => void;
 	removePost: (id: string) => void;
 	clearPosts: () => void;
 	resetToDefault: () => void;
 }
 
 export const useUserPostsStore = create<UserPostsState>((set) => ({
-	posts: DEFAULT_USER_POSTS,
+	// Ao entrar pela primeira vez, inicia vazio (variante com imagem e texto)
+	posts: [],
 
 	addPost: (post) =>
 		set((state) => ({
@@ -64,6 +66,25 @@ export const useUserPostsStore = create<UserPostsState>((set) => ({
 					createdAt: post.createdAt || new Date().toISOString(),
 				},
 				...state.posts,
+			],
+		})),
+
+	// Simula a publicação e chaveia para a variante com lista/histórico de anúncios
+	publishSimulatedPost: (post) =>
+		set((state) => ({
+			posts: [
+				{
+					id:
+						post?.id ||
+						`post_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+					time: post?.time ?? 0,
+					name: post?.name || "Rex",
+					type: post?.type || "Cachorro",
+					situation: post?.situation || "Perdido",
+					image: post?.image,
+					createdAt: post?.createdAt || new Date().toISOString(),
+				},
+				...(state.posts.length === 0 ? DEFAULT_USER_POSTS : state.posts),
 			],
 		})),
 

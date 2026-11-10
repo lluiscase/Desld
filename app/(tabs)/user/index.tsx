@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useUserPostsStore } from "@/entities/pet";
 import {
 	LogoutModal,
 	UserAvatarButton as Perfil,
@@ -26,6 +27,7 @@ export default function User() {
 
 	const handleConfirmLogout = async () => {
 		setIsLogoutModalVisible(false);
+		useUserPostsStore.getState().clearPosts();
 		await clearSession();
 		router.replace("/(auth)/login");
 	};
